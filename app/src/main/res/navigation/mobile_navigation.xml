@@ -7,26 +7,26 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.jovel.appchangev10.fragments_main.HomeFragment"
-        android:label="fragment_home"
+        android:label="Inicio"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_change"
         android:name="com.jovel.appchangev10.fragments_main.ChangeFragment"
-        android:label="fragment_change"
+        android:label="Intercambia"
         tools:layout="@layout/fragment_change" />
     <fragment
         android:id="@+id/navigation_messages"
         android:name="com.jovel.appchangev10.fragments_main.MessagesFragment"
-        android:label="fragment_messages"
+        android:label="Mensajes"
         tools:layout="@layout/fragment_messages" />
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.jovel.appchangev10.fragments_main.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="Mi perfil"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/navigation_favorites"
         android:name="com.jovel.appchangev10.fragments_main.FavoritesFragment"
-        android:label="fragment_favorites"
+        android:label="Favoritos"
         tools:layout="@layout/fragment_favorites" />
 </navigation>

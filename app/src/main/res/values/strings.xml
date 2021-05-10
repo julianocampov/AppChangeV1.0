@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AppChangeV1.0</string>
+    <string name="app_name">AppChange</string>
     <string name="title_home">Incio</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>

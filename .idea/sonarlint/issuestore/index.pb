@@ -7,21 +7,13 @@ m
 Lapp/src/main/java/com/jovel/appchangev10/fragments_main/FavoritesFragment.kt,5\c\5c97cd66c37f6b7b6bb67ff012a5588355ef5509
 {
 Kapp/src/main/java/com/jovel/appchangev10/fragments_main/MessagesFragment.kt,9\0\9072bdb994d50fedce10c6353caa991beb50abdb
-z
-Japp/src/main/java/com/jovel/appchangev10/fragments_main/ProfileFragment.kt,6\c\6c75fc6ca23ad17132f26489d470d152971e321d
 w
 Gapp/src/main/java/com/jovel/appchangev10/fragments_main/HomeFragment.kt,3\0\308fb64755826300c51405bb99bbc48128c9e0d7
 o
 ?app/src/main/java/com/jovel/appchangev10/utils/ConstantUtils.kt,6\2\62c864b48be890eaead086ac6a5a9f58eb3c3898
-j
-:app/src/main/java/com/jovel/appchangev10/SplashActivity.kt,3\6\36390a7430f8f60fbcfb548a7a5393ecdb12b17c
 l
 <app/src/main/java/com/jovel/appchangev10/RegisterActivity.kt,8\5\854dcbda72acb6d97a81f4dc1cd16223fe1fd612
-h
-8app/src/main/java/com/jovel/appchangev10/MainActivity.kt,1\a\1a359671d85e64ce0abdea4e079f88598228aa87
-P
- app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
-y
-Iapp/src/main/java/com/jovel/appchangev10/fragments_main/ChangeFragment.kt,0\4\048d7c3ce29ce0a7d3ebb5b08d07d68513a907a2
-i
-9app/src/main/java/com/jovel/appchangev10/LoginActivity.kt,5\7\57df1ef6ccc8264299dfc99b0896da18f9103b4f
+k
+;app/src/test/java/com/jovel/appchangev10/ExampleUnitTest.kt,4\a\4ad4e8883ccae9a1bbed13c6c08ff1a4438a3adf
+z
+Japp/src/androidTest/java/com/jovel/appchangev10/ExampleInstrumentedTest.kt,2\0\206de586bd0ce285d460ed55b1ccc3fae0f36809
