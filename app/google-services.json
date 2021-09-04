@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "707326008531",
+    "project_id": "appchange-ccfdf",
+    "storage_bucket": "appchange-ccfdf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:707326008531:android:1b4c468df646d1e43cc826",
+        "android_client_info": {
+          "package_name": "com.jovel.appchangev10"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "707326008531-n3lkgeubjj1857dn9ushm807tjfg52fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMz6i_Tv0NU7WP9J8yJmp5LWlP4g7OypE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "707326008531-n3lkgeubjj1857dn9ushm807tjfg52fs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
