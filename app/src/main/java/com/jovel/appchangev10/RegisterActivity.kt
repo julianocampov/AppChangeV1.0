@@ -6,21 +6,29 @@ import android.os.Bundle
 import android.view.Window
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.jovel.appchangev10.databinding.ActivityRegisterBinding
+import com.jovel.appchangev10.model.User
 import com.jovel.appchangev10.utils.*
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var registerBinding: ActivityRegisterBinding
-    private lateinit var nombre: String
-    private lateinit var correo: String
-    private lateinit var contra: String
+    private lateinit var name: String
+    private lateinit var email: String
+    private lateinit var password: String
     private lateinit var reppassword: String
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         registerBinding = ActivityRegisterBinding.inflate(layoutInflater)
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(registerBinding.root)
+
+        auth = Firebase.auth
 
         buttonListener()
         onChangeListener()
@@ -31,9 +39,59 @@ class RegisterActivity : AppCompatActivity() {
 
             readTextInputs()
 
-            if (notEmptyFields(nombre, correo, contra, reppassword, this) && validateName() && validateEmail() && validateContra() && validateRepContra()) {
-                sendDataToLogin()
+            if (notEmptyFields(name, email, password, reppassword, this)) {
+                if(validateName()){
+                    if (password != reppassword){
+                        registerBinding.repPasswordTextInputLayout.error = getString(R.string.password_not_match)
+                    } else{
+                        auth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener() { task ->
+                                if (task.isSuccessful) {
+                                    createUser(email, name)
+                                    sendDataToLogin()
+                                    //TODO ir al login
+                                } else {
+                                    when (task.exception?.localizedMessage) {
+                                        "The email address is badly formatted." ->
+                                            registerBinding.emailTextInputLayout.error = getString(R.string.enter_valid_email)
+                                        "The given password is invalid. [ Password should be at least 6 characters ]" ->
+                                            registerBinding.passwordTextInputLayout.error = getString(R.string.password_length)
+                                        "The email address is already in use by another account." ->
+                                            registerBinding.emailTextInputLayout.error = getString(R.string.email_used)
+                                    }
+                                }
+                            }
+                    }
+                }
             }
+        }
+    }
+
+    private fun createUser(email: String, name: String) {
+        val id = auth.currentUser?.uid
+        id?.let { id ->
+            val user = User(
+                id = id,
+                name = name,
+                email = email,
+                qualification = 0.0,
+                changes = 0,
+                phone = null,
+                urlProfileImage = null,
+                address = null,
+                city = null,
+                products = null,
+                ProviderType.BASIC)
+            val db = Firebase.firestore
+
+            db.collection("users").document(id)
+                    .set(user)
+                    .addOnSuccessListener { documentReference ->   //Creacion exitosa
+                        Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { e ->   //Creacion fallida
+                        Toast.makeText(this, "No se pudo registrar", Toast.LENGTH_SHORT).show()
+                    }
         }
     }
 
@@ -60,9 +118,9 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun readTextInputs() {
         with(registerBinding) {
-            nombre = nameEditText.text.toString()
-            correo = emailEditText.text.toString()
-            contra = passwordEditText.text.toString()
+            name = nameEditText.text.toString()
+            email = emailEditText.text.toString()
+            password = passwordEditText.text.toString()
             reppassword = repPasswordEditText.text.toString()
             passwordTextInputLayout.error = null
             repPasswordTextInputLayout.error = null
@@ -70,42 +128,16 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun validateName(): Boolean {
-        if(lengthString(nombre, USER_NAME_LENGTH)) return true
+        if(lengthString(name, USER_NAME_LENGTH)) return true
         registerBinding.nameTextInputLayout.error = getString(R.string.enter_valid_name)
-        return lengthString(nombre, USER_NAME_LENGTH)
-    }
-
-    private fun validateEmail(): Boolean {
-        if(!emailValidator(correo)) {
-            registerBinding.emailTextInputLayout.error = getString(R.string.enter_valid_email)
-            return false
-        }
-        return true
-    }
-
-    private fun validateContra(): Boolean {
-        if(lengthString(contra, PASSWORD_LENGTH)) return true
-
-        registerBinding.passwordTextInputLayout.error = getString(R.string.password_length)
-        return lengthString(contra, PASSWORD_LENGTH)
-    }
-
-    private fun validateRepContra(): Boolean {
-        if ( contra != reppassword ) {
-            registerBinding.repPasswordTextInputLayout.error = getString(R.string.password_not_match)
-            return false
-        }
-        return true
+        return lengthString(name, USER_NAME_LENGTH)
     }
 
     private fun sendDataToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
-        intent.putExtra("correo", correo)
-        intent.putExtra("contraseña", contra)
-        intent.putExtra("nombre", nombre)
-        intent.putExtra("band", 1)
+        intent.putExtra("correo", email)
+        intent.putExtra("contraseña", password)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
         startActivity(intent)
         finish()
     }

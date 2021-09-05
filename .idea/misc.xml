@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/activity_login.xml" value="0.20833333333333334" />
+        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/activity_main.xml" value="0.209375" />
+        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/fragment_favorites.xml" value="0.209375" />
+        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/fragment_home.xml" value="0.209375" />
+        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/fragment_messages.xml" value="0.209375" />
+        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/fragment_profile.xml" value="0.209375" />
+        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>
