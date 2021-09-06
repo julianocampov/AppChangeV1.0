@@ -38,6 +38,7 @@ class HomeFragment : Fragment() {
     private fun loadFromFB() {
         val db = Firebase.firestore
         db.collection("products").get().addOnSuccessListener { result ->
+            homeBinding.pruebaTexTView.text = "ENTRE"
             var listProducts: MutableList<Product> = arrayListOf()
             for (document in result){
                 Log.d("cosas", document.data.toString())
