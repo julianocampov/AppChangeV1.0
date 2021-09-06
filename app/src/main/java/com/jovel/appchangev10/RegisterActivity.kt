@@ -44,30 +44,34 @@ class RegisterActivity : AppCompatActivity() {
                     if (password != reppassword){
                         registerBinding.repPasswordTextInputLayout.error = getString(R.string.password_not_match)
                     } else{
-                        auth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener() { task ->
-                                if (task.isSuccessful) {
-                                    createUser(email, name)
-                                    sendDataToLogin()
-                                    //TODO ir al login
-                                } else {
-                                    when (task.exception?.localizedMessage) {
-                                        "The email address is badly formatted." ->
-                                            registerBinding.emailTextInputLayout.error = getString(R.string.enter_valid_email)
-                                        "The given password is invalid. [ Password should be at least 6 characters ]" ->
-                                            registerBinding.passwordTextInputLayout.error = getString(R.string.password_length)
-                                        "The email address is already in use by another account." ->
-                                            registerBinding.emailTextInputLayout.error = getString(R.string.email_used)
-                                    }
-                                }
-                            }
+                        createAuthUser(email, password)
                     }
                 }
             }
         }
     }
 
-    private fun createUser(email: String, name: String) {
+    private fun createAuthUser(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener() { task ->
+                if (task.isSuccessful) {
+                    createStorageUser(email, name)
+                    sendDataToLogin()
+                    //TODO ir al login
+                } else {
+                    when (task.exception?.localizedMessage) {
+                        "The email address is badly formatted." ->
+                            registerBinding.emailTextInputLayout.error = getString(R.string.enter_valid_email)
+                        "The given password is invalid. [ Password should be at least 6 characters ]" ->
+                            registerBinding.passwordTextInputLayout.error = getString(R.string.password_length)
+                        "The email address is already in use by another account." ->
+                            registerBinding.emailTextInputLayout.error = getString(R.string.email_used)
+                    }
+                }
+            }
+    }
+
+    private fun createStorageUser(email: String, name: String) {
         val id = auth.currentUser?.uid
         id?.let { id ->
             val user = User(
@@ -80,7 +84,6 @@ class RegisterActivity : AppCompatActivity() {
                 urlProfileImage = null,
                 address = null,
                 city = null,
-                products = null,
                 ProviderType.BASIC)
             val db = Firebase.firestore
 

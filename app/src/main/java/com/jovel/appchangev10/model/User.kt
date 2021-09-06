@@ -14,6 +14,6 @@ data class User(
         var city: String? = null,
         //chats
         //favoritos
-        var products: MutableList<Product>? = null,
+        //var products: MutableList<Product>? = null,
         var provider: ProviderType? = null
         )

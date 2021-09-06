@@ -57,8 +57,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun signIn() {
 
-        val email = loginBinding.emailEditText.text.toString()
-        val password = loginBinding.passwordEditText.text.toString()
+        val email = /*"j@j.co"*/loginBinding.emailEditText.text.toString()
+        val password = /*"123456"*/loginBinding.passwordEditText.text.toString()
 
         if(notEmptyFields(email, password," "," ", this)) {
 
