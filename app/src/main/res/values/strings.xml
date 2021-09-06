@@ -33,7 +33,7 @@
     <string name="home">Inicio</string>
     <string name="favorites">Favoritos</string>
     <string name="change">Intercambia</string>
-    <string name="text_example_card_view">Este producto es..., y es así...</string>
+    <string name="text_example_card_view">Descripción del producto</string>
 
 
 </resources>
