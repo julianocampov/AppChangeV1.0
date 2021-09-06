@@ -1,4 +1,4 @@
-package com.jovel.appchangev10.fragments_main
+package com.jovel.appchangev10.fragments_main.messages
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

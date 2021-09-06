@@ -6,27 +6,27 @@
     app:startDestination="@id/navigation_home">
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.jovel.appchangev10.fragments_main.HomeFragment"
+        android:name="com.jovel.appchangev10.fragments_main.home.HomeFragment"
         android:label="Inicio"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/navigation_change"
-        android:name="com.jovel.appchangev10.fragments_main.ChangeFragment"
+        android:name="com.jovel.appchangev10.fragments_main.change.ChangeFragment"
         android:label="Intercambia"
         tools:layout="@layout/fragment_change" />
     <fragment
         android:id="@+id/navigation_messages"
-        android:name="com.jovel.appchangev10.fragments_main.MessagesFragment"
+        android:name="com.jovel.appchangev10.fragments_main.messages.MessagesFragment"
         android:label="Mensajes"
         tools:layout="@layout/fragment_messages" />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.jovel.appchangev10.fragments_main.ProfileFragment"
+        android:name="com.jovel.appchangev10.fragments_main.profile.ProfileFragment"
         android:label="Mi perfil"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/navigation_favorites"
-        android:name="com.jovel.appchangev10.fragments_main.FavoritesFragment"
+        android:name="com.jovel.appchangev10.fragments_main.favorites.FavoritesFragment"
         android:label="Favoritos"
         tools:layout="@layout/fragment_favorites" />
 </navigation>
