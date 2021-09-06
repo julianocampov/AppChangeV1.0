@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments_main.FavoritesFragment">
-
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/textView4"
         android:text="Aquí se mostraran los productos que el usuario haya agregado a sus favoritos"
