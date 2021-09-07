@@ -22,7 +22,6 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ViewHolder>(){
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(listProduct[position])
-
     }
 
     override fun getItemCount(): Int {

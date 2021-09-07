@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -25,7 +25,7 @@ class HomeFragment : Fragment() {
 
         productsAdapter = ProductsAdapter( )
         homeBinding.productsRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@HomeFragment.context)
+            layoutManager = GridLayoutManager(this@HomeFragment.context, 2)
             adapter = productsAdapter
             setHasFixedSize(false)
         }
