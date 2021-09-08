@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments_main.change.ChangeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:id="@+id/textView5"
         android:text="Aquí el usuario podrá publicar cualquier objeto que quiera intercambiar, agregando fotos y una descripción de este"
