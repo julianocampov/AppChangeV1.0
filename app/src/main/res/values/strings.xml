@@ -54,8 +54,10 @@
     <string name="title_profile">Perfil</string>
 
     <string name="warning_login_empty">Algún campo está vacío</string>
-    <string name="warning_login_incorrect_field">El correo o la contraseña son incorrectas</string>
+
 
     <string name="welcome">Bienvenido</string>
-    <string name="edit_profile">Editar perfil</string>
+
+
+
 </resources>

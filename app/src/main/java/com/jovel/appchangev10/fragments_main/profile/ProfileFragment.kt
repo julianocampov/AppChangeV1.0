@@ -1,4 +1,4 @@
-package com.jovel.appchangev10.fragments_main
+package com.jovel.appchangev10.fragments_main.profile
 
 import android.content.Intent
 import android.os.Bundle
