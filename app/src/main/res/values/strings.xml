@@ -1,49 +1,30 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
     <string name="app_name">AppChange</string>
-
     <string name="change">Intercambia</string>
-
     <string name="check_in">Registrarse</string>
-
     <string name="create_account">Crea tu cuenta</string>
-
     <string name="email">Correo electrónico</string>
     <string name="email_is">Su correo es:</string>
     <string name="email_used">Ya existe una cuenta con ese correo</string>
-
     <string name="enter_valid_email">Ingrese un correo electrónico valido</string>
     <string name="enter_valid_name">Ingrese su nombre y apellido (mínimo 6 letras)</string>
-
+    <string name="edit_profile">Editar perfil</string>
     <string name="favorites">Favoritos</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="home">Inicio</string>
-
     <string name="login">Iniciar sesión</string>
     <string name="login_message">Ingresa tus datos o crea una cuenta para compartir con la comunidad de AppChange.</string>
-
     <string name="logout">Cerrar sesión</string>
-
     <string name="missing_data">"Falta algún campo por rellenar"</string>
-
     <string name="name">Nombre completo</string>
-
     <string name="password">Contraseña</string>
     <string name="password_length">"Debe tener mínimo 6 caracteres"</string>
     <string name="password_not_match">Las contraseñas no coinciden</string>
-
     <string name="question_dont_have_account">¿No tienes cuenta?</string>
-
     <string name="register">Regístrate</string>
-
     <string name="rep_password">Repita la contraseña</string>
-
     <string name="required_field">*Campo requerido</string>
-
-    <string name="text_example_card_view">Este producto es..., y es así...</string>
-
+    <string name="text_example_card_view">Este producto es…, y es así…</string>
     <string name="title_activity_practica3">MainActivity</string>
     <string name="title_change">Intercambia</string>
     <string name="title_dashboard">Dashboard</string>
@@ -52,12 +33,7 @@
     <string name="title_messages">Mensajes</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_profile">Perfil</string>
-
+    <string name="warning_login_incorrect_field">Correo electrónico o contraseña incorrectos</string>
     <string name="warning_login_empty">Algún campo está vacío</string>
-
-
     <string name="welcome">Bienvenido</string>
-
-
-
 </resources>
