@@ -6,13 +6,15 @@
         <entry key="..\:/StudioProjects/AppChange/app/src/main/res/drawable/profile.xml" value="0.22552083333333334" />
         <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/activity_login.xml" value="0.20833333333333334" />
         <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/activity_main.xml" value="0.209375" />
-        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/card_view_products_item.xml" value="0.209375" />
+        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/card_view_products_item.xml" value="0.33" />
+        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/cardview_categories.xml" value="0.75" />
         <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/fragment_change.xml" value="0.209375" />
         <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/fragment_favorites.xml" value="0.209375" />
         <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/fragment_home.xml" value="0.209375" />
         <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/fragment_messages.xml" value="0.209375" />
+        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/fragment_product.xml" value="0.33" />
         <entry key="..\:/StudioProjects/AppChange/app/src/main/res/layout/fragment_profile.xml" value="0.209375" />
-        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
+        <entry key="..\:/StudioProjects/AppChange/app/src/main/res/menu/bottom_nav_menu.xml" value="0.16" />
         <entry key="..\:/StudioProjects/AppChange/app/src/main/res/menu/menuprofile.xml" value="0.209375" />
         <entry key="..\:/Users/WIN/Documents/UdeA/Semestre 7/Programacion dispositivos moviles/AppChange/app/src/main/res/layout/activity_main.xml" value="0.209375" />
         <entry key="..\:/Users/WIN/Documents/UdeA/Semestre 7/Programacion dispositivos moviles/AppChange/app/src/main/res/layout/card_view_products_item.xml" value="0.22" />
@@ -21,12 +23,9 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/build/classes" />
-  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
-  <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>

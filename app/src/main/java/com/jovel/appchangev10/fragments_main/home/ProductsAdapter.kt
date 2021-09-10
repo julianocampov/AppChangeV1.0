@@ -9,10 +9,11 @@ import com.jovel.appchangev10.databinding.CardViewProductsItemBinding
 import com.jovel.appchangev10.model.Product
 import com.squareup.picasso.Picasso
 
-class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ViewHolder>(){
+class ProductsAdapter (
+    private val onItemClicked : (Product) -> Unit
+        ) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>(){
 
     private var listProduct : MutableList<Product> = mutableListOf()
-    var positionCard = true
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,6 +23,7 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ViewHolder>(){
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(listProduct[position])
+        holder.itemView.setOnClickListener{ onItemClicked(listProduct[position])}
     }
 
     override fun getItemCount(): Int {
@@ -39,7 +41,7 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ViewHolder>(){
         private val binding = CardViewProductsItemBinding.bind(view)
         fun bind(product: Product){
             with(binding){
-                description1TextView.text = product.description
+                description1TextView.text = product.title
                 if (product.urlImage != null)
                     Picasso.get().load(product.urlImage).into(productImageView);
             }
