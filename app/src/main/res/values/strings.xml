@@ -36,6 +36,7 @@
     <string name="warning_login_incorrect_field">Correo electrónico o contraseña incorrectos</string>
     <string name="warning_login_empty">Algún campo está vacío</string>
     <string name="welcome">Bienvenido</string>
+    <string name="change_password">Cambiar contraseña</string>
     <string name="add_products">+ Agregar fotos</string>
     <string name="title">Título</string>
     <string name="description">Descripción del producto</string>

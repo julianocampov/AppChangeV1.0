@@ -11,7 +11,7 @@ class MessagesFragment : Fragment() {
 
     private lateinit var messagesBinding: FragmentMessagesBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         messagesBinding = FragmentMessagesBinding.inflate(inflater, container, false)
         return messagesBinding.root
     }

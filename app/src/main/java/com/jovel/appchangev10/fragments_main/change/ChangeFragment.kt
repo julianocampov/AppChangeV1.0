@@ -59,6 +59,10 @@ class ChangeFragment : Fragment() {
             saveProduct()
         }
 
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        changeBinding = FragmentChangeBinding.inflate(inflater,container, false)
+
         return changeBinding.root
 
 

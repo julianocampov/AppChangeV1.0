@@ -53,7 +53,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun createAuthUser(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener() { task ->
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     createStorageUser(email, name)
                     sendDataToLogin()
@@ -73,7 +73,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun createStorageUser(email: String, name: String) {
         val id = auth.currentUser?.uid
-        id?.let { id ->
+        id?.let {
             val user = User(
                 id = id,
                 name = name,
@@ -84,15 +84,16 @@ class RegisterActivity : AppCompatActivity() {
                 urlProfileImage = null,
                 address = null,
                 city = null,
+                favorites = null,
                 ProviderType.BASIC)
             val db = Firebase.firestore
 
             db.collection("users").document(id)
                     .set(user)
-                    .addOnSuccessListener { documentReference ->   //Creacion exitosa
+                    .addOnSuccessListener {     //Creacion exitosa
                         Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
                     }
-                    .addOnFailureListener { e ->   //Creacion fallida
+                    .addOnFailureListener {     //Creacion fallida
                         Toast.makeText(this, "No se pudo registrar", Toast.LENGTH_SHORT).show()
                     }
         }

@@ -1,5 +1,7 @@
 package com.jovel.appchangev10.model
 
+import java.io.Serializable
+
 data class Product (
         var id: String? = null,
         var idOwner: String? = null,
@@ -8,6 +10,6 @@ data class Product (
         var description: String? = null,
         var city: String? = null,
         var preferences: MutableList<String>? = null,
-        var categorys: MutableList<String>? = null,
+        var categories: MutableList<String>? = null,
         var state: String? = null
-)
+) : Serializable
