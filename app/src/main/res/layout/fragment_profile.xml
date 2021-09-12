@@ -11,46 +11,57 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/profile_image_view"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_weight="1"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:layout_weight="2"
             tools:srcCompat="@tools:sample/avatars" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
+            android:layout_weight="8"
+            android:gravity="center|left"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/name_text_view"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
 
             <TextView
                 android:id="@+id/qualif_text_view"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
 
             <TextView
                 android:id="@+id/changes_text_view"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
         </LinearLayout>
 
     </LinearLayout>
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/color_buttom_check"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_products_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="32dp"
         tools:listitem="@layout/card_view_products_item" />
 </LinearLayout>

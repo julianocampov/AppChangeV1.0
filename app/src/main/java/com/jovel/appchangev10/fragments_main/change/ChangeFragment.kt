@@ -10,18 +10,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.jovel.appchangev10.R
 import com.jovel.appchangev10.databinding.FragmentChangeBinding
+import com.jovel.appchangev10.fragments_main.home.CategoriesTitleAdapter
+import com.jovel.appchangev10.model.Category
 import com.jovel.appchangev10.model.Product
 import java.io.ByteArrayOutputStream
 
 class ChangeFragment : Fragment() {
 
     private lateinit var changeBinding: FragmentChangeBinding
+    private lateinit var categoriesAdapter: CategoriesTitleAdapter
+    private var listCategoriesSelected: MutableList<Category> = arrayListOf()
     var numberPictures = 0
 
     var resultLauncher =
@@ -41,6 +49,14 @@ class ChangeFragment : Fragment() {
     ): View? {
         changeBinding = FragmentChangeBinding.inflate(inflater, container, false)
 
+        categoriesAdapter = CategoriesTitleAdapter( onItemClicked = {onCategoryItemClicked(it)})
+        changeBinding.categoriesTitleRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@ChangeFragment.context, RecyclerView.HORIZONTAL, false)
+            adapter = categoriesAdapter
+            setHasFixedSize(false)
+        }
+
+        loadFromFB()
 
         with(changeBinding) {
             addPicturesButton.setOnClickListener {
@@ -59,6 +75,22 @@ class ChangeFragment : Fragment() {
         }
 
         return changeBinding.root
+    }
+
+    private fun loadFromFB() {
+        val db = Firebase.firestore
+        db.collection("categories").get().addOnSuccessListener { result ->
+            val listCategories : MutableList<Category> = arrayListOf()
+            for (document in result){
+                val c : Category = document.toObject()
+                c.let { listCategories.add(it) }
+            }
+            categoriesAdapter.appendItems(listCategories)
+        }
+    }
+
+    private fun onCategoryItemClicked(category: Category) {
+        listCategoriesSelected.add(category)
     }
 
     private fun saveProduct() {
@@ -94,8 +126,9 @@ class ChangeFragment : Fragment() {
                     val ubication = ubicationProductEditText.text.toString()
                     val state = stateSpinner.selectedItem.toString()
                     val product = Product(id = id_product, idOwner = id_user_prueba, urlImage = urlPicture, title=title,description= description,null,null, state = state)
-                    //db.collection("pruducts").document(id_product).set(product)
-                    //db.collection("users").document(id_user_prueba).collection("products").document(id_product).set(product)
+                    db.collection("products").document(id_product).set(product)
+                    db.collection("users").document(id_user_prueba).collection("products").document(id_product).set(product)
+                    Toast.makeText(requireContext(), "Producto creado", Toast.LENGTH_SHORT).show()
                     //intento de change
 
 
@@ -114,7 +147,7 @@ class ChangeFragment : Fragment() {
             titleProductEditText.setText("")
             descriptionProductEditText.setText("")
             ubicationProductEditText.setText("")
-
+            addProductImageView.setImageDrawable(resources.getDrawable(R.drawable.ic_camera))
         }
     }
 

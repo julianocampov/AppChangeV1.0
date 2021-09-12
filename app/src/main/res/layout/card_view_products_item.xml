@@ -24,7 +24,7 @@
                 android:layout_width="252dp"
                 android:layout_height="168dp"
                 android:layout_gravity="center"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 app:srcCompat="@drawable/camara" />
 
             <TextView
