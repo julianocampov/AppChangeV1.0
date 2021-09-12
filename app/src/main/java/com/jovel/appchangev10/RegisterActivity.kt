@@ -84,6 +84,7 @@ class RegisterActivity : AppCompatActivity() {
                 urlProfileImage = null,
                 address = null,
                 city = null,
+                favorites = null,
                 ProviderType.BASIC)
             val db = Firebase.firestore
 

@@ -13,7 +13,7 @@ data class User(
         var address: String? = null,
         var city: String? = null,
         //chats
-        //favor
+        var favorites : MutableList<Product>? = null,
         //var products: MutableList<Product>? = null,
         var provider: ProviderType? = null
         )

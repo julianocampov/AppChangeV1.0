@@ -32,7 +32,11 @@
         android:id="@+id/navigation_favorites"
         android:name="com.jovel.appchangev10.fragments_main.favorites.FavoritesFragment"
         android:label="Favoritos"
-        tools:layout="@layout/fragment_favorites" />
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_navigation_favorites_to_productFragment"
+            app:destination="@id/productFragment" />
+    </fragment>
     <fragment
         android:id="@+id/productFragment"
         android:name="com.jovel.appchangev10.fragments_main.ProductFragment"

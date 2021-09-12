@@ -6,17 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".fragments_main.favorites.FavoritesFragment">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:text="Aquí se mostraran los productos que el usuario haya agregado a sus favoritos"
-        android:layout_width="340dp"
-        android:layout_height="50dp"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favorites_recycler_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/card_view_products_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
