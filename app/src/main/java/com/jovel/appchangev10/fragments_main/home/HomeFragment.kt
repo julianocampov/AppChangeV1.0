@@ -1,7 +1,6 @@
 package com.jovel.appchangev10.fragments_main.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +23,7 @@ class HomeFragment : Fragment() {
     private lateinit var categoriesAdapter: CategoriesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
 
@@ -48,26 +47,36 @@ class HomeFragment : Fragment() {
     }
 
     private fun onCategoryItemClicked(category: Category) {
-        //TODO filtrar los productos por categoria
+        val db = Firebase.firestore
+        db.collection("products").get().addOnSuccessListener { result ->
+            val listProducts: MutableList<Product> = arrayListOf()
+            for (document in result){
+                val product : Product = document.toObject()
+
+                if(product.categories?.contains(category.name) == true || category.name == "Todo") {
+                    listProducts.add(document.toObject())
+                }
+            }
+            productsAdapter.appendItems(listProducts)
+        }
     }
 
     private fun onProductItemClicked(product: Product) {
-        //TODO ir a fragment producto
+        //TODO ir a fragment product
         findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToProductFragment(product))
     }
 
     private fun loadFromFB() {
         val db = Firebase.firestore
         db.collection("products").get().addOnSuccessListener { result ->
-            var listProducts: MutableList<Product> = arrayListOf()
+            val listProducts: MutableList<Product> = arrayListOf()
             for (document in result){
-                Log.d("cosas", document.data.toString())
-                listProducts.add(document.toObject<Product>())
+                listProducts.add(document.toObject())
             }
             productsAdapter.appendItems(listProducts)
         }
         db.collection("categories").get().addOnSuccessListener { result ->
-            var listCategories : MutableList<Category> = arrayListOf()
+            val listCategories : MutableList<Category> = arrayListOf()
             for (document in result){
                 val c : Category = document.toObject()
                 c.let { listCategories.add(it) }
@@ -76,7 +85,4 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 }

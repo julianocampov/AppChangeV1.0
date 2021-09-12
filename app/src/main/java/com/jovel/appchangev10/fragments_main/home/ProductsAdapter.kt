@@ -43,7 +43,7 @@ class ProductsAdapter (
             with(binding){
                 description1TextView.text = product.title
                 if (product.urlImage != null)
-                    Picasso.get().load(product.urlImage).into(productImageView);
+                    Picasso.get().load(product.urlImage).into(productImageView)
             }
 
         }

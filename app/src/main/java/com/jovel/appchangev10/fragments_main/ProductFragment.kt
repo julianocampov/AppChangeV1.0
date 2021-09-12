@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
-import com.jovel.appchangev10.R
 import com.jovel.appchangev10.databinding.FragmentProductBinding
 import com.squareup.picasso.Picasso
 
@@ -19,7 +18,7 @@ class ProductFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         productBinding = FragmentProductBinding.inflate(inflater, container, false)
 
         val product = args.product
