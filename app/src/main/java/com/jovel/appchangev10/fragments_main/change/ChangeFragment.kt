@@ -54,18 +54,11 @@ class ChangeFragment : Fragment() {
             }
         }
 
-
         changeBinding.addProductButton.setOnClickListener {
             saveProduct()
         }
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        changeBinding = FragmentChangeBinding.inflate(inflater,container, false)
-
         return changeBinding.root
-
-
     }
 
     private fun saveProduct() {
