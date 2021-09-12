@@ -10,5 +10,6 @@ data class Product (
         var description: String? = null,
         var city: String? = null,
         var preferences: MutableList<String>? = null,
-        var categories: MutableList<String>? = null
+        var categories: MutableList<String>? = null,
+        var state: String? = null
 ) : Serializable

@@ -37,4 +37,11 @@
     <string name="warning_login_empty">Algún campo está vacío</string>
     <string name="welcome">Bienvenido</string>
     <string name="change_password">Cambiar contraseña</string>
+    <string name="add_products">+ Agregar fotos</string>
+    <string name="title">Título</string>
+    <string name="description">Descripción del producto</string>
+    <string name="ubication">Ubicación</string>
+    <string name="state_product">Estado del producto:</string>
+    <string name="categories">Categorías</string>
+    <string name="add_product">Agregar producto</string>
 </resources>
