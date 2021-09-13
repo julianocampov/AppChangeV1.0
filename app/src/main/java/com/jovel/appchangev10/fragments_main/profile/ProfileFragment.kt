@@ -73,6 +73,7 @@ class ProfileFragment : Fragment() {
 
     private fun onProductItemClicked(product: Product) {
         TODO("Not yet implemented")
+        //TODO Crear la otra ventana para editar los productos
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

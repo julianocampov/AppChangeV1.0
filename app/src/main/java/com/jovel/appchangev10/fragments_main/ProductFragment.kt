@@ -30,7 +30,7 @@ class ProductFragment : Fragment() {
         val product = args.product
 
         productBinding.likeTextView.setOnClickListener{
-            //TODO agregar el producto a los favoritos del usuario
+            //TODO cargar completamente los datos e implementar la accion volver
             auth = Firebase.auth
             val id = auth.currentUser?.uid
             val db = Firebase.firestore

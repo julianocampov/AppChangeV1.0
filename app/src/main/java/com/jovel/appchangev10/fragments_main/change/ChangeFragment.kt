@@ -14,6 +14,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -31,6 +33,7 @@ class ChangeFragment : Fragment() {
     private lateinit var categoriesAdapter: CategoriesTitleAdapter
     private var listCategoriesSelected: MutableList<Category> = arrayListOf()
     var numberPictures = 0
+    private lateinit var auth: FirebaseAuth
 
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -49,7 +52,7 @@ class ChangeFragment : Fragment() {
     ): View? {
         changeBinding = FragmentChangeBinding.inflate(inflater, container, false)
 
-        categoriesAdapter = CategoriesTitleAdapter( onItemClicked = {onCategoryItemClicked(it)})
+        categoriesAdapter = CategoriesTitleAdapter( onItemClicked = {onCategoryItemClicked(it)}) //TODO guardar categorias del producto
         changeBinding.categoriesTitleRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@ChangeFragment.context, RecyclerView.HORIZONTAL, false)
             adapter = categoriesAdapter
@@ -95,12 +98,15 @@ class ChangeFragment : Fragment() {
 
     private fun saveProduct() {
         val db = Firebase.firestore
-        val id_user_prueba = "Jbj2es7yWpOBmSXJMgCu3U4XInF3"
-        val document_product_in_user = db.collection("users").document(id_user_prueba).collection("products").document()
-        val id_product = document_product_in_user.id
+
+        auth = Firebase.auth
+        val id_user_prueba = auth.currentUser?.uid
+        val document_product_in_user =
+            id_user_prueba?.let { db.collection("users").document(it).collection("products").document() }
+        val id_product = document_product_in_user?.id
 
         var storageRef = FirebaseStorage.getInstance()
-        val pictureRef = storageRef.reference.child("products").child(id_product)
+        val pictureRef = id_product?.let { storageRef.reference.child("products").child(it) }
         changeBinding.addProductButton.isDrawingCacheEnabled = true
         changeBinding.addProductButton.buildDrawingCache()
 
@@ -109,15 +115,15 @@ class ChangeFragment : Fragment() {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 
-        val uploadTask = pictureRef.putBytes(data)    //Sube la información
-        val urlTask = uploadTask.continueWithTask { task ->
+        val uploadTask = pictureRef?.putBytes(data)    //Sube la información
+        val urlTask = uploadTask?.continueWithTask { task ->
             if (!task.isSuccessful) {
                 task.exception?.let {
                     throw it
                 }
             }
             pictureRef.downloadUrl
-        }.addOnCompleteListener { task ->
+        }?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val urlPicture = task.result.toString()           //URL de la imagen
                 with(changeBinding) {
@@ -126,8 +132,8 @@ class ChangeFragment : Fragment() {
                     val ubication = ubicationProductEditText.text.toString()
                     val state = stateSpinner.selectedItem.toString()
                     val product = Product(id = id_product, idOwner = id_user_prueba, urlImage = urlPicture, title=title,description= description,null,null, state = state)
-                    db.collection("products").document(id_product).set(product)
-                    db.collection("users").document(id_user_prueba).collection("products").document(id_product).set(product)
+                    id_product?.let { db.collection("products").document(it).set(product) }
+                    id_user_prueba?.let { db.collection("users").document(it).collection("products").document(id_product).set(product) }
                     Toast.makeText(requireContext(), "Producto creado", Toast.LENGTH_SHORT).show()
                     //intento de change
 
