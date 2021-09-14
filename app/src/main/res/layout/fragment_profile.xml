@@ -5,8 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".fragments_main.profile.ProfileFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+
+        android:theme="?attr/actionBarTheme"
+        app:menu="@menu/menuprofile" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/color_app"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,12 +31,12 @@
         android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image_view"
-            android:layout_width="60dp"
+            android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_weight="2"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:layout_margin="16dp"
+            android:src="@drawable/profile" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -53,7 +70,6 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="16dp"
         android:background="@color/color_buttom_check"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,4 +80,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/card_view_products_item" />
+
 </LinearLayout>

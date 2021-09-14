@@ -58,6 +58,8 @@ class ProfileFragment : Fragment() {
                 }
             }
 
+            //profileBinding.toolbar3.createContextMenu(resources(R.menu.bottom_nav_menu))
+
             db.collection("products").get().addOnSuccessListener { result ->
                 val listProducts: MutableList<Product> = arrayListOf()
                 for (document in result){
