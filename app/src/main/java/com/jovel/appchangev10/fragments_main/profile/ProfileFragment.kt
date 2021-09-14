@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -14,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import com.jovel.appchangev10.LoginActivity
 import com.jovel.appchangev10.R
 import com.jovel.appchangev10.databinding.FragmentProfileBinding
+import com.jovel.appchangev10.fragments_main.MyProductsAdapter
 import com.jovel.appchangev10.fragments_main.home.ProductsAdapter
 import com.jovel.appchangev10.model.Product
 import com.jovel.appchangev10.model.User
@@ -22,13 +24,13 @@ import com.squareup.picasso.Picasso
 class ProfileFragment : Fragment() {
 
     private lateinit var profileBinding: FragmentProfileBinding
-    private lateinit var productsAdapter: ProductsAdapter
+    private lateinit var productsAdapter: MyProductsAdapter
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         profileBinding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        productsAdapter = ProductsAdapter( onItemClicked = {onProductItemClicked(it)} )
+        productsAdapter = MyProductsAdapter(onProductClicked = {onProductItemClicked2(it)})
         profileBinding.myProductsRecyclerView.apply {
             layoutManager = GridLayoutManager(this@ProfileFragment.context, 2)
             adapter = productsAdapter
@@ -40,6 +42,10 @@ class ProfileFragment : Fragment() {
         val db = Firebase.firestore
 
         loadDataFromFB(db,id)
+
+        profileBinding.toolbar3.setOnMenuItemClickListener {
+            onOptionsItemSelected(it)
+        }
 
         return profileBinding.root
     }
@@ -58,8 +64,6 @@ class ProfileFragment : Fragment() {
                 }
             }
 
-            //profileBinding.toolbar3.createContextMenu(resources(R.menu.bottom_nav_menu))
-
             db.collection("products").get().addOnSuccessListener { result ->
                 val listProducts: MutableList<Product> = arrayListOf()
                 for (document in result){
@@ -73,19 +77,8 @@ class ProfileFragment : Fragment() {
 
     }
 
-    private fun onProductItemClicked(product: Product) {
-        TODO("Not yet implemented")
-        //TODO Crear la otra ventana para editar los productos
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        setHasOptionsMenu(true)
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menuprofile,menu)
-        super.onCreateOptionsMenu(menu, inflater)
+    private fun onProductItemClicked2(product: Product) {
+        findNavController().navigate(ProfileFragmentDirections.actionNavigationProfileToProductFragment(product))
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
