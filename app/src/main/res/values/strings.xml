@@ -44,4 +44,5 @@
     <string name="state_product">Estado del producto:</string>
     <string name="categories">Categorías</string>
     <string name="add_product">Agregar producto</string>
+    <string name="categorie_example">Categorìa</string>
 </resources>
