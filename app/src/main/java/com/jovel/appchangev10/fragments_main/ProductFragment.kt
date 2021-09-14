@@ -59,7 +59,7 @@ class ProductFragment : Fragment() {
 
     private fun loadProductData(product: Product) {
         with(productBinding) {
-            titleTextView.text = "Titulo : "+product.title
+            titleTextView.text = product.title
             descriptionTextView.text = "Descripción : "+product.description
             locationTextView.text = product.city
             conditionTextView.text = "Condición : "+product.state
