@@ -31,7 +31,7 @@ class ChangeFragment : Fragment() {
 
     private lateinit var changeBinding: FragmentChangeBinding
     private lateinit var categoriesAdapter: CategoriesTitleAdapter
-    private var listCategoriesSelected: MutableList<Category> = arrayListOf()
+    private var listCategoriesSelected: MutableList<String> = arrayListOf()
     var numberPictures = 0
     private lateinit var auth: FirebaseAuth
 
@@ -93,7 +93,8 @@ class ChangeFragment : Fragment() {
     }
 
     private fun onCategoryItemClicked(category: Category) {
-        listCategoriesSelected.add(category)
+        if (!listCategoriesSelected.contains(category.name))
+            category.name?.let { listCategoriesSelected.add(it) }
     }
 
     private fun saveProduct() {
@@ -131,7 +132,7 @@ class ChangeFragment : Fragment() {
                     val description = descriptionProductEditText.text.toString()
                     val ubication = ubicationProductEditText.text.toString()
                     val state = stateSpinner.selectedItem.toString()
-                    val product = Product(id = id_product, idOwner = id_user_prueba, urlImage = urlPicture, title=title,description= description,null,null, state = state)
+                    val product = Product(id = id_product, idOwner = id_user_prueba, city = ubication, urlImage = urlPicture, title=title,description= description, state = state, categories = listCategoriesSelected)
                     id_product?.let { db.collection("products").document(it).set(product) }
                     id_user_prueba?.let { db.collection("users").document(it).collection("products").document(id_product).set(product) }
                     Toast.makeText(requireContext(), "Producto creado", Toast.LENGTH_SHORT).show()

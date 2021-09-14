@@ -16,7 +16,7 @@ class CategoriesTitleAdapter (
 ) : RecyclerView.Adapter<CategoriesTitleAdapter.ViewHolder>() {
 
     private var listCategories : MutableList<Category> = mutableListOf()
-    var positionSelect = 0
+    var positionSelect = 999
 
     override fun onCreateViewHolder( parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.cardview_categories_no_icon, parent, false)
