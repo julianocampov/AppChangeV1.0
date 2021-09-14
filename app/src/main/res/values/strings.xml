@@ -15,7 +15,7 @@
     <string name="login">Iniciar sesión</string>
     <string name="login_message">Ingresa tus datos o crea una cuenta para compartir con la comunidad de AppChange.</string>
     <string name="logout">Cerrar sesión</string>
-    <string name="missing_data">"Falta algún campo por rellenar"</string>
+    <string name="missing_data">"Algún campo está vacío"</string>
     <string name="name">Nombre completo</string>
     <string name="password">Contraseña</string>
     <string name="password_length">"Debe tener mínimo 6 caracteres"</string>
@@ -45,4 +45,6 @@
     <string name="categories">Categorías</string>
     <string name="add_product">Agregar producto</string>
     <string name="categorie_example">Categorìa</string>
+    <string name="missing_picture">"Ingresa una imagen del producto"</string>
+
 </resources>

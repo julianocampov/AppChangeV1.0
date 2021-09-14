@@ -61,7 +61,7 @@ class ProductFragment : Fragment() {
         with(productBinding) {
             titleTextView.text = "Titulo : "+product.title
             descriptionTextView.text = "Descripción : "+product.description
-            locationTextView.text = product.city
+            locationTextView.text = product.ubication
             conditionTextView.text = "Condición : "+product.state
             nameOwnerTextView.text = product.idOwner
             loadCategoriesTextView.text = "Categorias : "+ product.categories

@@ -28,7 +28,6 @@
                     android:layout_height="150dp"
                     android:layout_marginStart="44dp"
                     android:layout_marginTop="32dp"
-                    android:background="#B8B8B8"
                     android:src="@drawable/ic_camera"
                     tools:ignore="ContentDescription,ImageContrastCheck"
                     tools:srcCompat="@drawable/ic_camera" />
@@ -143,7 +142,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categories_title_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="37dp"
+                android:layout_height="42dp"
                 android:orientation="horizontal"
                 android:scrollbarSize="8dp"
                 android:visibility="visible"

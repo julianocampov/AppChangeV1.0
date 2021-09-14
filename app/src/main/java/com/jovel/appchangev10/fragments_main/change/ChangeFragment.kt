@@ -1,5 +1,6 @@
 package com.jovel.appchangev10.fragments_main.change
 
+
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -32,8 +33,13 @@ class ChangeFragment : Fragment() {
     private lateinit var changeBinding: FragmentChangeBinding
     private lateinit var categoriesAdapter: CategoriesTitleAdapter
     private var listCategoriesSelected: MutableList<String> = arrayListOf()
-    var numberPictures = 0
     private lateinit var auth: FirebaseAuth
+    private lateinit var title: String
+    private lateinit var description: String
+    private lateinit var ubication: String
+    private lateinit var state: String
+    private var numberPictures = 0
+    var conditionalPicture = false
 
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -52,9 +58,11 @@ class ChangeFragment : Fragment() {
     ): View? {
         changeBinding = FragmentChangeBinding.inflate(inflater, container, false)
 
-        categoriesAdapter = CategoriesTitleAdapter( onItemClicked = {onCategoryItemClicked(it)}) //TODO guardar categorias del producto
+        categoriesAdapter =
+            CategoriesTitleAdapter(onItemClicked = { onCategoryItemClicked(it) }) //TODO guardar categorias del producto
         changeBinding.categoriesTitleRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@ChangeFragment.context, RecyclerView.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(this@ChangeFragment.context, RecyclerView.HORIZONTAL, false)
             adapter = categoriesAdapter
             setHasFixedSize(false)
         }
@@ -63,18 +71,27 @@ class ChangeFragment : Fragment() {
 
         with(changeBinding) {
             addPicturesButton.setOnClickListener {
-
-                if (numberPictures == 3) {
-                    addProductButton.isClickable = false
-                } else {
-                    numberPictures += 1
-                    dispatchTakePictureIntent()
-                }
+                conditionalPicture = true
+                dispatchTakePictureIntent()
             }
         }
 
         changeBinding.addProductButton.setOnClickListener {
-            saveProduct()
+            with(changeBinding) {
+                title = titleProductEditText.text.toString()
+                description = descriptionProductEditText.text.toString()
+                ubication = ubicationProductEditText.text.toString()
+                state = stateSpinner.selectedItem.toString()
+            }
+            if (notEmptyFieldsChange(title, description, ubication, state) && listCategoriesSelected.isNotEmpty() && conditionalPicture) {
+                saveProduct()
+            }
+            else if((!notEmptyFieldsChange(title, description, ubication, state) || listCategoriesSelected.isEmpty())){
+                Toast.makeText(requireContext(), R.string.missing_data, Toast.LENGTH_SHORT).show()
+            }
+            else{
+                Toast.makeText(requireContext(), R.string.missing_picture, Toast.LENGTH_SHORT).show()
+            }
         }
 
         return changeBinding.root
@@ -83,9 +100,9 @@ class ChangeFragment : Fragment() {
     private fun loadFromFB() {
         val db = Firebase.firestore
         db.collection("categories").get().addOnSuccessListener { result ->
-            val listCategories : MutableList<Category> = arrayListOf()
-            for (document in result){
-                val c : Category = document.toObject()
+            val listCategories: MutableList<Category> = arrayListOf()
+            for (document in result) {
+                val c: Category = document.toObject()
                 c.let { listCategories.add(it) }
             }
             categoriesAdapter.appendItems(listCategories)
@@ -98,19 +115,18 @@ class ChangeFragment : Fragment() {
     }
 
     private fun saveProduct() {
-        val db = Firebase.firestore
 
+        val db = Firebase.firestore
         auth = Firebase.auth
-        val id_user_prueba = auth.currentUser?.uid
-        val document_product_in_user =
-            id_user_prueba?.let { db.collection("users").document(it).collection("products").document() }
+        val id_user = auth.currentUser?.uid
+        val document_product_in_user = id_user?.let { db.collection("users").document(it).collection("products").document() }
         val id_product = document_product_in_user?.id
 
         var storageRef = FirebaseStorage.getInstance()
         val pictureRef = id_product?.let { storageRef.reference.child("products").child(it) }
         changeBinding.addProductButton.isDrawingCacheEnabled = true
         changeBinding.addProductButton.buildDrawingCache()
-
+        val prueba = changeBinding.addProductImageView.drawable
         val bitmap = (changeBinding.addProductImageView.drawable as BitmapDrawable).bitmap
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
@@ -126,26 +142,27 @@ class ChangeFragment : Fragment() {
             pictureRef.downloadUrl
         }?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                val urlPicture = task.result.toString()           //URL de la imagen
-                with(changeBinding) {
-                    val title = titleProductEditText.text.toString()
-                    val description = descriptionProductEditText.text.toString()
-                    val ubication = ubicationProductEditText.text.toString()
-                    val state = stateSpinner.selectedItem.toString()
-                    val product = Product(id = id_product, idOwner = id_user_prueba, city = ubication, urlImage = urlPicture, title=title,description= description, state = state, categories = listCategoriesSelected)
-                    id_product?.let { db.collection("products").document(it).set(product) }
-                    id_user_prueba?.let { db.collection("users").document(it).collection("products").document(id_product).set(product) }
-                    Toast.makeText(requireContext(), "Producto creado", Toast.LENGTH_SHORT).show()
-                    //intento de change
-
-
-                    cleanViews()
+                val urlPicture = task.result.toString()
+                val product = Product(id = id_product, idOwner = id_user, ubication = ubication, urlImage = urlPicture, title = title, description = description, state = state, categories = listCategoriesSelected)
+                id_product.let { db.collection("products").document(it).set(product) }
+                id_user.let {
+                    db.collection("users").document(it).collection("products").document(id_product)
+                        .set(product)
                 }
+                Toast.makeText(requireContext(), "Producto creado", Toast.LENGTH_SHORT).show()
+                cleanViews()
+
             } else {
-                // Handle failures
-                // ...
+
+
             }
         }
+    }
+
+    private fun notEmptyFieldsChange(title: String, description: String, ubication: String, state: String): Boolean {
+        if (!(title.isNotEmpty() && description.isNotEmpty() && ubication.isNotEmpty() && state.isNotEmpty()))
+            Toast.makeText(activity, "Algún campo está vacío", Toast.LENGTH_SHORT).show()
+        return title.isNotEmpty() && description.isNotEmpty() && ubication.isNotEmpty() && state.isNotEmpty()
     }
 
     private fun cleanViews() {

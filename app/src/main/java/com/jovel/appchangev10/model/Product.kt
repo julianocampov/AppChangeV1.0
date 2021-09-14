@@ -8,7 +8,7 @@ data class Product (
         var urlImage: String? = null,
         var title: String? = null,
         var description: String? = null,
-        var city: String? = null,
+        var ubication: String? = null,
         var preferences: MutableList<String>? = null,
         var categories: MutableList<String>? = null,
         var state: String? = null
