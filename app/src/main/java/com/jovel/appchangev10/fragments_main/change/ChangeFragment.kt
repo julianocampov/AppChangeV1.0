@@ -55,7 +55,7 @@ class ChangeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         changeBinding = FragmentChangeBinding.inflate(inflater, container, false)
 
         categoriesAdapter =
@@ -73,6 +73,13 @@ class ChangeFragment : Fragment() {
             addPicturesButton.setOnClickListener {
                 conditionalPicture = true
                 dispatchTakePictureIntent()
+            }
+
+            toolbar3.setNavigationOnClickListener {
+                cleanViews()
+                conditionalPicture=false
+                listCategoriesSelected.clear()
+                Toast.makeText(requireContext(), "Campos limpiados", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -122,7 +129,7 @@ class ChangeFragment : Fragment() {
         val document_product_in_user = id_user?.let { db.collection("users").document(it).collection("products").document() }
         val id_product = document_product_in_user?.id
 
-        var storageRef = FirebaseStorage.getInstance()
+        val storageRef = FirebaseStorage.getInstance()
         val pictureRef = id_product?.let { storageRef.reference.child("products").child(it) }
         changeBinding.addProductButton.isDrawingCacheEnabled = true
         changeBinding.addProductButton.buildDrawingCache()
@@ -151,10 +158,6 @@ class ChangeFragment : Fragment() {
                 }
                 Toast.makeText(requireContext(), "Producto creado", Toast.LENGTH_SHORT).show()
                 cleanViews()
-
-            } else {
-
-
             }
         }
     }

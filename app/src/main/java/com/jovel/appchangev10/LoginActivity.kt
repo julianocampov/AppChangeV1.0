@@ -7,6 +7,7 @@ import android.view.Window
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.jovel.appchangev10.databinding.ActivityLoginBinding
 import com.jovel.appchangev10.utils.notEmptyFields
@@ -23,6 +24,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(loginBinding.root)
 
         auth = Firebase.auth
+        val id = auth.currentUser?.uid
+
+        if (id != null) {
+            sendDataToMain(id)
+        }
 
         saveData()
         buttonsListeners()
@@ -57,8 +63,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun signIn() {
 
-        val email = /*"j@j.co"*/loginBinding.emailEditText.text.toString()
-        val password = /*"123456"*/loginBinding.passwordEditText.text.toString()
+        val email = loginBinding.emailEditText.text.toString()
+        val password = loginBinding.passwordEditText.text.toString()
 
         if(notEmptyFields(email, password," "," ", this)) {
 

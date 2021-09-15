@@ -39,6 +39,10 @@ class ProductFragment : Fragment() {
             //TODO cargar completamente los datos e implementar la accion volver
         }
 
+        productBinding.toolbar3.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
+
         loadOwnerFromFB(db, product)
         loadProductData(product)
 
