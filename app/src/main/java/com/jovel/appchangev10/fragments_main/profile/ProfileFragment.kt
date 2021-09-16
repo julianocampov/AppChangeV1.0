@@ -59,7 +59,8 @@ class ProfileFragment : Fragment() {
                         profileBinding.nameTextView.text = user.name
                         profileBinding.changesTextView.text = user.changes.toString()
                         profileBinding.qualifTextView.text = user.qualification.toString()
-                        Picasso.get().load(user.urlProfileImage).into(profileBinding.profileImageView)
+                        if (user.urlProfileImage != null)
+                            Picasso.get().load(user.urlProfileImage).into(profileBinding.profileImageView)
                     }
                 }
             }

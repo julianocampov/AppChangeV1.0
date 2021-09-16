@@ -39,14 +39,16 @@ class ChangeFragment : Fragment() {
     private lateinit var ubication: String
     private lateinit var state: String
     private var numberPictures = 0
-    var conditionalPicture = false
+    private var imageCreated = false
+    //var conditionalPicture = false
 
-    var resultLauncher =
+    private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = result.data
                 val imageBitmap = data?.extras?.get("data") as Bitmap
                 changeBinding.addProductImageView.setImageBitmap(imageBitmap)
+                imageCreated = true
             }
 
         }
@@ -71,13 +73,14 @@ class ChangeFragment : Fragment() {
 
         with(changeBinding) {
             addPicturesButton.setOnClickListener {
-                conditionalPicture = true
+                //conditionalPicture = true
                 dispatchTakePictureIntent()
             }
 
             toolbar3.setNavigationOnClickListener {
                 cleanViews()
-                conditionalPicture=false
+                //conditionalPicture=false
+                imageCreated = false
                 listCategoriesSelected.clear()
                 Toast.makeText(requireContext(), "Campos limpiados", Toast.LENGTH_SHORT).show()
             }
@@ -90,7 +93,7 @@ class ChangeFragment : Fragment() {
                 ubication = ubicationProductEditText.text.toString()
                 state = stateSpinner.selectedItem.toString()
             }
-            if (notEmptyFieldsChange(title, description, ubication, state) && listCategoriesSelected.isNotEmpty() && conditionalPicture) {
+            if (notEmptyFieldsChange(title, description, ubication, state) && listCategoriesSelected.isNotEmpty() && imageCreated) {
                 saveProduct()
             }
             else if((!notEmptyFieldsChange(title, description, ubication, state) || listCategoriesSelected.isEmpty())){
@@ -133,14 +136,14 @@ class ChangeFragment : Fragment() {
         val pictureRef = id_product?.let { storageRef.reference.child("products").child(it) }
         changeBinding.addProductButton.isDrawingCacheEnabled = true
         changeBinding.addProductButton.buildDrawingCache()
-        val prueba = changeBinding.addProductImageView.drawable
         val bitmap = (changeBinding.addProductImageView.drawable as BitmapDrawable).bitmap
         val baos = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
 
         val uploadTask = pictureRef?.putBytes(data)    //Sube la información
-        val urlTask = uploadTask?.continueWithTask { task ->
+
+        uploadTask?.continueWithTask { task ->
             if (!task.isSuccessful) {
                 task.exception?.let {
                     throw it

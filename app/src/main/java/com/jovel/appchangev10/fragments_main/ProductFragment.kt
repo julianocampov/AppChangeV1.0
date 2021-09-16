@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.navArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -22,6 +23,7 @@ class ProductFragment : Fragment() {
     private lateinit var productBinding: FragmentProductBinding
     private lateinit var auth: FirebaseAuth
     private val args : ProductFragmentArgs by navArgs()
+    private lateinit var user : User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +38,26 @@ class ProductFragment : Fragment() {
 
 
         productBinding.likeTextView.setOnClickListener{
-            //TODO cargar completamente los datos e implementar la accion volver
+            db.collection("users").get().addOnSuccessListener {
+                for (document in it) {
+                    if (document.id == id) {
+                        user = document.toObject()
+                    }
+                }
+            }
+            val fav = user.favorites
+            val documentUpdate = HashMap<String, Any>()
+            if (fav != null) {
+                documentUpdate["favorites"] = fav.add(product)
+            }
+            else {
+                documentUpdate["favorites"] = product
+            }
+            if (id != null) {
+                db.collection("users").document(id).update(documentUpdate).addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Deudor actualizado", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         productBinding.toolbar3.setNavigationOnClickListener {
