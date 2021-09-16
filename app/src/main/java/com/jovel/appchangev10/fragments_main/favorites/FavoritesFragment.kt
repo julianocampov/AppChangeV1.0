@@ -1,6 +1,7 @@
 package com.jovel.appchangev10.fragments_main.favorites
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class FavoritesFragment : Fragment() {
     private lateinit var favoritesBinding : FragmentFavoritesBinding
     private lateinit var favoritesAdapter: ProductsAdapter
     private lateinit var auth: FirebaseAuth
+    private var listFavorites: MutableList<Product> = arrayListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         favoritesBinding = FragmentFavoritesBinding.inflate(inflater, container, false)
@@ -42,6 +44,7 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun onFavoriteItemClicked(favorite: Product) {
+        listFavorites.clear()
         findNavController().navigate(FavoritesFragmentDirections.actionNavigationFavoritesToProductFragment(favorite))
     }
 
@@ -49,12 +52,20 @@ class FavoritesFragment : Fragment() {
         auth = Firebase.auth
         val id = auth.currentUser?.uid
         val db = Firebase.firestore
-        val listFavorites: MutableList<Product> = arrayListOf()
-        db.collection("users").get().addOnSuccessListener {
-            for(document in it){
+        db.collection("users").get().addOnSuccessListener { it1 ->
+            for(document in it1){
                 if(document.id == id){
                     val user : User = document.toObject()
-                    user.favorites?.let { it1 -> favoritesAdapter.appendItems(it1) }
+                    db.collection("products").get().addOnSuccessListener { it2 ->
+                        for (prod in it2){
+                            val product : Product = prod.toObject()
+                            if (user.favorites?.contains(product.id) == true){
+                                Log.d("aqws", product.title.toString())
+                                listFavorites.add(product)
+                            }
+                        }
+                        favoritesAdapter.appendItems(listFavorites)
+                    }
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.jovel.appchangev10.fragments_main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +24,8 @@ class ProductFragment : Fragment() {
     private lateinit var productBinding: FragmentProductBinding
     private lateinit var auth: FirebaseAuth
     private val args : ProductFragmentArgs by navArgs()
-    private lateinit var user : User
+    private var user : User? = null
+    private lateinit var fav : MutableList<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,26 +38,25 @@ class ProductFragment : Fragment() {
         val id = auth.currentUser?.uid
         val db = Firebase.firestore
 
-
-        productBinding.likeTextView.setOnClickListener{
-            db.collection("users").get().addOnSuccessListener {
+        db.collection("users").get()
+            .addOnSuccessListener {
                 for (document in it) {
                     if (document.id == id) {
                         user = document.toObject()
                     }
                 }
             }
-            val fav = user.favorites
-            val documentUpdate = HashMap<String, Any>()
-            if (fav != null) {
-                documentUpdate["favorites"] = fav.add(product)
-            }
-            else {
-                documentUpdate["favorites"] = product
-            }
-            if (id != null) {
-                db.collection("users").document(id).update(documentUpdate).addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Deudor actualizado", Toast.LENGTH_SHORT).show()
+
+        productBinding.likeTextView.setOnClickListener{
+            if (user != null) {
+                fav = user!!.favorites!!
+                val documentUpdate = HashMap<String, MutableList<String>>()
+                fav.add(product.id.toString())
+                documentUpdate["favorites"] = fav
+                if (id != null) {
+                    db.collection("users").document(id).update(documentUpdate as Map<String, Any>).addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Deudor actualizado", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
