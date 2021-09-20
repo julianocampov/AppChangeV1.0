@@ -41,7 +41,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -53,8 +53,8 @@
                     android:id="@+id/add_product_image_view"
                     android:layout_width="100dp"
                     android:layout_height="150dp"
-                    android:layout_marginStart="44dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="12dp"
                     android:src="@drawable/ic_camera"
                     tools:ignore="ContentDescription,ImageContrastCheck"
                     tools:srcCompat="@drawable/ic_camera" />
@@ -65,11 +65,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/round_button"
                 android:text="@string/add_products"
                 android:textAllCaps="false"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 tools:ignore="TextContrastCheck" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -177,8 +177,9 @@
 
             <Button
                 android:id="@+id/add_product_button"
-                android:layout_width="match_parent"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"

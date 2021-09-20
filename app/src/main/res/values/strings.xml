@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AppChange</string>
     <string name="change">Intercambia</string>
-    <string name="check_in">Registrarse</string>
+    <string name="check_in">Registrarse</string>texto
     <string name="create_account">Crea tu cuenta</string>
     <string name="email">Correo electrónico</string>
     <string name="email_is">Su correo es:</string>
@@ -21,7 +21,7 @@
     <string name="password_length">"Debe tener mínimo 6 caracteres"</string>
     <string name="password_not_match">Las contraseñas no coinciden</string>
     <string name="question_dont_have_account">¿No tienes cuenta?</string>
-    <string name="register">Regístrate</string>
+    <string name="register"><u>Regístrate</u></string>
     <string name="rep_password">Repita la contraseña</string>
     <string name="required_field">*Campo requerido</string>
     <string name="text_example_card_view">Este producto es…, y es así…</string>
