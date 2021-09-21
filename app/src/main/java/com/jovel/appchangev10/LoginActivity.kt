@@ -24,11 +24,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(loginBinding.root)
 
         auth = Firebase.auth
-        val id = auth.currentUser?.uid
-
-        if (id != null) {
-            sendDataToMain(id)
-        }
 
         saveData()
         buttonsListeners()
@@ -54,9 +49,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendDataToMain(uid: String) {
+    private fun sendDataToMain() {
         val intent = Intent(this,MainActivity::class.java)
-        intent.putExtra("id", uid)
         startActivity(intent)
         finish()
     }
@@ -71,11 +65,7 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(this, "Inicio de sesion correcto", Toast.LENGTH_SHORT).show()
-                        val user = auth.currentUser
-                        if (user != null) {
-                            sendDataToMain(user.uid)
-                        }
+                        sendDataToMain()
                     } else
                         Toast.makeText(
                             this, getString(R.string.warning_login_incorrect_field),

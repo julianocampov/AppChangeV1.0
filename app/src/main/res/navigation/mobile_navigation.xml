@@ -17,7 +17,11 @@
         android:id="@+id/navigation_change"
         android:name="com.jovel.appchangev10.fragments_main.change.ChangeFragment"
         android:label="Intercambia"
-        tools:layout="@layout/fragment_change" />
+        tools:layout="@layout/fragment_change" >
+        <argument
+            android:name="product"
+            app:argType="com.jovel.appchangev10.model.Product" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_messages"
         android:name="com.jovel.appchangev10.fragments_main.messages.MessagesFragment"
@@ -51,5 +55,8 @@
         <action
             android:id="@+id/action_productFragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_productFragment_to_navigation_change"
+            app:destination="@id/navigation_change" />
     </fragment>
 </navigation>

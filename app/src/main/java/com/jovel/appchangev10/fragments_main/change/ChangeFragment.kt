@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -33,6 +34,7 @@ class ChangeFragment : Fragment() {
     private lateinit var changeBinding: FragmentChangeBinding
     private lateinit var categoriesAdapter: CategoriesTitleAdapter
     private var listCategoriesSelected: MutableList<String> = arrayListOf()
+    private val args: ChangeFragmentArgs by navArgs()
     private lateinit var auth: FirebaseAuth
     private lateinit var title: String
     private lateinit var description: String
@@ -40,7 +42,6 @@ class ChangeFragment : Fragment() {
     private lateinit var state: String
     private var numberPictures = 0
     private var imageCreated = false
-    //var conditionalPicture = false
 
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -59,6 +60,8 @@ class ChangeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         changeBinding = FragmentChangeBinding.inflate(inflater, container, false)
+
+        val product = args.product
 
         categoriesAdapter =
             CategoriesTitleAdapter(onItemClicked = { onCategoryItemClicked(it) }) //TODO guardar categorias del producto
