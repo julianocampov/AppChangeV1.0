@@ -20,7 +20,9 @@
         tools:layout="@layout/fragment_change" >
         <argument
             android:name="product"
-            app:argType="com.jovel.appchangev10.model.Product" />
+            app:argType="com.jovel.appchangev10.model.Product"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/navigation_messages"

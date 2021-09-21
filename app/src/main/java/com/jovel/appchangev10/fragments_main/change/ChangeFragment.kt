@@ -27,6 +27,7 @@ import com.jovel.appchangev10.databinding.FragmentChangeBinding
 import com.jovel.appchangev10.fragments_main.home.CategoriesTitleAdapter
 import com.jovel.appchangev10.model.Category
 import com.jovel.appchangev10.model.Product
+import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
 
 class ChangeFragment : Fragment() {
@@ -63,6 +64,43 @@ class ChangeFragment : Fragment() {
 
         val product = args.product
 
+        if (product != null){
+            with(changeBinding){
+                titleProductEditText.setText(product.title)
+                descriptionProductEditText.setText(product.description)
+                ubicationProductEditText.setText(product.ubication)
+
+                val arraySpinner = resources.getStringArray(R.array.state_list)
+                stateSpinner.setSelection(arraySpinner.binarySearch(product.state))
+
+                listCategoriesSelected = product.categories!!
+
+                Picasso.get().load(product.urlImage).into(addProductImageView)
+                addProductButton.text = getString(R.string.update)
+
+                imageCreated = true
+            }
+        } else {
+
+            changeBinding.addProductButton.setOnClickListener {
+                with(changeBinding) {
+                    title = titleProductEditText.text.toString()
+                    description = descriptionProductEditText.text.toString()
+                    ubication = ubicationProductEditText.text.toString()
+                    state = stateSpinner.selectedItem.toString()
+                }
+                if (notEmptyFieldsChange(title, description, ubication, state) && listCategoriesSelected.isNotEmpty() && imageCreated) {
+                    saveProduct()
+                }
+                else if((!notEmptyFieldsChange(title, description, ubication, state) || listCategoriesSelected.isEmpty())){
+                    Toast.makeText(requireContext(), R.string.missing_data, Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(requireContext(), R.string.missing_picture, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         categoriesAdapter =
             CategoriesTitleAdapter(onItemClicked = { onCategoryItemClicked(it) }) //TODO guardar categorias del producto
         changeBinding.categoriesTitleRecyclerView.apply {
@@ -76,34 +114,14 @@ class ChangeFragment : Fragment() {
 
         with(changeBinding) {
             addPicturesButton.setOnClickListener {
-                //conditionalPicture = true
                 dispatchTakePictureIntent()
             }
 
             toolbar3.setNavigationOnClickListener {
                 cleanViews()
-                //conditionalPicture=false
                 imageCreated = false
                 listCategoriesSelected.clear()
                 Toast.makeText(requireContext(), "Campos limpiados", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        changeBinding.addProductButton.setOnClickListener {
-            with(changeBinding) {
-                title = titleProductEditText.text.toString()
-                description = descriptionProductEditText.text.toString()
-                ubication = ubicationProductEditText.text.toString()
-                state = stateSpinner.selectedItem.toString()
-            }
-            if (notEmptyFieldsChange(title, description, ubication, state) && listCategoriesSelected.isNotEmpty() && imageCreated) {
-                saveProduct()
-            }
-            else if((!notEmptyFieldsChange(title, description, ubication, state) || listCategoriesSelected.isEmpty())){
-                Toast.makeText(requireContext(), R.string.missing_data, Toast.LENGTH_SHORT).show()
-            }
-            else{
-                Toast.makeText(requireContext(), R.string.missing_picture, Toast.LENGTH_SHORT).show()
             }
         }
 
