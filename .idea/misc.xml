@@ -18,10 +18,16 @@
         <entry key="..\:/StudioProjects/AppChange/app/src/main/res/menu/menuprofile.xml" value="0.209375" />
         <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/drawable/round_button.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/layout/activity_register.xml" value="0.209375" />
+        <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/layout/card_view_products_item.xml" value="0.20615384615384616" />
         <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/layout/cardview_categories_no_icon.xml" value="0.25" />
-        <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/layout/fragment_change.xml" value="0.16" />
+        <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/layout/fragment_change.xml" value="0.1" />
+        <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/layout/fragment_product.xml" value="0.2" />
+        <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
+        <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/layout/fragment_update_info.xml" value="0.22" />
+        <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/layout/fragment_upgrade.xml" value="0.18" />
+        <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/menu/bottom_nav_menu.xml" value="0.15648148148148147" />
+        <entry key="..\:/Users/WIN/Desktop/AppChange/app/src/main/res/menu/menuprofile.xml" value="0.15648148148148147" />
         <entry key="..\:/Users/WIN/Documents/UdeA/Semestre 7/Programacion dispositivos moviles/AppChange/app/src/main/res/layout/activity_main.xml" value="0.209375" />
         <entry key="..\:/Users/WIN/Documents/UdeA/Semestre 7/Programacion dispositivos moviles/AppChange/app/src/main/res/layout/card_view_products_item.xml" value="0.22" />
         <entry key="..\:/Users/WIN/Documents/UdeA/Semestre 7/Programacion dispositivos moviles/AppChange/app/src/main/res/layout/fragment_change.xml" value="0.209375" />

@@ -1,6 +1,7 @@
 package com.jovel.appchangev10.model
 
 import com.jovel.appchangev10.ProviderType
+import java.io.Serializable
 
 data class User(
         var id: String? = null,
@@ -16,4 +17,4 @@ data class User(
         var favorites : MutableList<String>? = null,
         //var products: MutableList<Product>? = null,
         var provider: ProviderType? = null
-        )
+        ) : Serializable

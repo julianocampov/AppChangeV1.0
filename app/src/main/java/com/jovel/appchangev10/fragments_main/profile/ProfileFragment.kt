@@ -16,7 +16,6 @@ import com.jovel.appchangev10.LoginActivity
 import com.jovel.appchangev10.R
 import com.jovel.appchangev10.databinding.FragmentProfileBinding
 import com.jovel.appchangev10.fragments_main.MyProductsAdapter
-import com.jovel.appchangev10.fragments_main.home.ProductsAdapter
 import com.jovel.appchangev10.model.Product
 import com.jovel.appchangev10.model.User
 import com.squareup.picasso.Picasso
@@ -26,6 +25,7 @@ class ProfileFragment : Fragment() {
     private lateinit var profileBinding: FragmentProfileBinding
     private lateinit var productsAdapter: MyProductsAdapter
     private lateinit var auth: FirebaseAuth
+    private lateinit var user : User
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         profileBinding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -55,7 +55,7 @@ class ProfileFragment : Fragment() {
             db.collection("users").get().addOnSuccessListener {
                 for(document in it){
                     if(document.id == id){
-                        val user : User = document.toObject()
+                        user = document.toObject()
                         profileBinding.nameTextView.text = user.name
                         profileBinding.changesTextView.text = user.changes.toString()
                         profileBinding.qualifTextView.text = user.qualification.toString()
@@ -90,6 +90,9 @@ class ProfileFragment : Fragment() {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                 startActivity(intent)
                 onDetach()
+            }
+            R.id.ch_personal_info-> {
+                findNavController().navigate(ProfileFragmentDirections.actionNavigationProfileToUpdateInfoFragment())
             }
         }
         return super.onOptionsItemSelected(item)
