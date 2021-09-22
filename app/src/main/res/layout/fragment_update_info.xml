@@ -54,7 +54,6 @@
                     android:layout_height="135dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
-                    android:src="@drawable/profile"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -123,7 +122,9 @@
                 android:id="@+id/phone_text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:textColorHint="#4A000000"
                 app:boxStrokeColor="#000000"
                 app:helperText="@string/required_field"
@@ -199,7 +200,8 @@
                 android:background="@drawable/round_button"
                 android:text="@string/save"
                 android:textAllCaps="false"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="TextContrastCheck" />
 
 
         </LinearLayout>

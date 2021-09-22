@@ -46,33 +46,36 @@
             android:id="@+id/profile_image_view"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_margin="16dp"
-            android:src="@drawable/profile" />
+            android:layout_margin="16dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="8"
             android:gravity="center|left"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:ignore="InefficientWeight,RtlHardcoded">
 
             <TextView
                 android:id="@+id/name_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/qualif_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/changes_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="TextView"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
     </LinearLayout>
