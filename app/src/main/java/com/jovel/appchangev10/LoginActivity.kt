@@ -24,6 +24,7 @@ class LoginActivity : AppCompatActivity() {
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(loginBinding.root)
 
+        auth = Firebase.auth
         saveData()
         buttonsListeners()
     }
@@ -48,9 +49,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendDataToMain(uid: String) {
+    private fun sendDataToMain() {
         val intent = Intent(this,MainActivity::class.java)
-        intent.putExtra("id", uid)
         startActivity(intent)
         finish()
     }

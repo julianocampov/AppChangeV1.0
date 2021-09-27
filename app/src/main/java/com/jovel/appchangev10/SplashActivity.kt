@@ -10,6 +10,9 @@ import com.google.firebase.ktx.Firebase
 import java.util.*
 import kotlin.concurrent.timerTask
 
+
+private lateinit var auth: FirebaseAuth
+
 class SplashActivity : AppCompatActivity() {
 
 
@@ -25,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
 
         if (id != null) {
             sendDataToMain(id)
-        } else {
+        }else{
             val timer = Timer()
             timer.schedule(
                 timerTask {
@@ -43,6 +46,13 @@ class SplashActivity : AppCompatActivity() {
 
     private fun sendDataToMain(uid: String) {
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("id", uid)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun sendDataToMain(uid: String) {
+        val intent = Intent(this,MainActivity::class.java)
         intent.putExtra("id", uid)
         startActivity(intent)
         finish()
