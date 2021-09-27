@@ -3,6 +3,7 @@ package com.jovel.appchangev10
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Window
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -24,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(loginBinding.root)
 
         auth = Firebase.auth
-
         saveData()
         buttonsListeners()
     }
@@ -65,13 +65,18 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        sendDataToMain()
-                    } else
-                        Toast.makeText(
+                        val user = auth.currentUser
+                        if (user != null) {
+                            sendDataToMain(user.uid)
+                        }
+                    } else {
+                        val toast = Toast.makeText(
                             this, getString(R.string.warning_login_incorrect_field),
-                            Toast.LENGTH_SHORT
-                        ).show()
-
+                            Toast.LENGTH_SHORT,
+                        )
+                        toast.setGravity(Gravity.CENTER,0,50)
+                        toast.show()
+                    }
                 }
         }
     }

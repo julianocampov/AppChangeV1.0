@@ -47,10 +47,17 @@
     <string name="categorie_example">Categorìa</string>
     <string name="missing_picture">"Ingresa una imagen del producto"</string>
     <string name="my_profile">Mi perfil</string>
+    <string name="plus">+</string>
+    <string name="title_change_information">Cambia tu información</string>
+    <string name="number">Número de contacto</string>
+    <string name="address">Dirección</string>
+    <string name="city">Ciudad</string>
+    <string name="save">Guardar</string>
     <string name="alert_delete_product">"¿Está seguro que desea eliminar este producto?"</string>
     <string name="accept">Aceptar</string>
     <string name="title_delete">Eliminar producto</string>
     <string name="cancel">Cancelar</string>
     <string name="update">Actualizar</string>
+
 
 </resources>

@@ -20,6 +20,9 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var email: String
     private lateinit var password: String
     private lateinit var reppassword: String
+    private lateinit var phone: String
+    private lateinit var address: String
+    private lateinit var city: String
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,9 +58,8 @@ class RegisterActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    createStorageUser(email, name)
+                    createStorageUser()
                     sendDataToLogin()
-                    //TODO ir al login
                 } else {
                     when (task.exception?.localizedMessage) {
                         "The email address is badly formatted." ->
@@ -71,7 +73,7 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 
-    private fun createStorageUser(email: String, name: String) {
+    private fun createStorageUser() {
         val id = auth.currentUser?.uid
         id?.let {
             val user = User(
@@ -80,10 +82,10 @@ class RegisterActivity : AppCompatActivity() {
                 email = email,
                 qualification = 0.0,
                 changes = 0,
-                phone = null,
+                phone = phone,
                 urlProfileImage = null,
-                address = null,
-                city = null,
+                address = address,
+                city = city,
                 favorites = null,
                 ProviderType.BASIC)
             val db = Firebase.firestore
@@ -91,10 +93,10 @@ class RegisterActivity : AppCompatActivity() {
             db.collection("users").document(id)
                     .set(user)
                     .addOnSuccessListener {     //Creacion exitosa
-                        Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
+
                     }
                     .addOnFailureListener {     //Creacion fallida
-                        Toast.makeText(this, "No se pudo registrar", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "No se pudo registrar, inténtalo más tarde", Toast.LENGTH_SHORT).show()
                     }
         }
     }
@@ -124,6 +126,9 @@ class RegisterActivity : AppCompatActivity() {
         with(registerBinding) {
             name = nameEditText.text.toString()
             email = emailEditText.text.toString()
+            phone = phoneEditText.text.toString()
+            address = addressEditText.text.toString()
+            city = cityEditText.text.toString()
             password = passwordEditText.text.toString()
             reppassword = repPasswordEditText.text.toString()
             passwordTextInputLayout.error = null

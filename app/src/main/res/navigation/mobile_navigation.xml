@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_productFragment"
             app:destination="@id/productFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_updateInfoFragment"
+            app:destination="@id/updateInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_favorites"
@@ -60,5 +63,11 @@
         <action
             android:id="@+id/action_productFragment_to_navigation_change"
             app:destination="@id/navigation_change" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateInfoFragment"
+        android:name="com.jovel.appchangev10.fragments_main.profile.UpdateInfoFragment"
+        android:label="fragment_update_info"
+        tools:layout="@layout/fragment_update_info" >
     </fragment>
 </navigation>

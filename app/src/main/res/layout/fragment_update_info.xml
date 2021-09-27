@@ -1,43 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo_login"
-    android:backgroundTint="@color/color_app"
-    android:backgroundTintMode="screen">
+    android:orientation="vertical"
+    tools:context=".fragments_main.profile.UpdateInfoFragment" >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:navigationIcon="@drawable/ic_clear">
+
+        <TextView
+            android:id="@+id/title_text_view"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/title_change_information"
+            android:textColor="@color/color_app" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/color_app"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        tools:ignore="SpeakableTextPresentCheck,UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="16dp"
-            tools:context=".RegisterActivity">
+            android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/create_text_view"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="@string/create_account"
-                android:textColor="@color/teal_700"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/edit_profile_image_view"
+                    android:layout_width="135dp"
+                    android:layout_height="135dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/add_picture_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/round_button"
+                    android:text="@string/plus"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="@+id/edit_profile_image_view"
+                    app:layout_constraintTop_toTopOf="@+id/edit_profile_image_view"
+                    tools:ignore="InefficientWeight,TextContrastCheck,TouchTargetSizeCheck" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/name_text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:textColorHint="#4A000000"
                 app:boxStrokeColor="#000000"
                 app:helperText="@string/required_field"
@@ -58,7 +100,9 @@
                 android:id="@+id/email_text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:textColorHint="#4A000000"
                 app:boxStrokeColor="#000000"
                 app:helperText="@string/required_field"
@@ -78,7 +122,9 @@
                 android:id="@+id/phone_text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:textColorHint="#4A000000"
                 app:boxStrokeColor="#000000"
                 app:helperText="@string/required_field"
@@ -88,6 +134,9 @@
                     android:id="@+id/phone_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
                     android:background="#FFFFFF"
                     android:hint="@string/number"
                     android:inputType="phone"
@@ -99,7 +148,9 @@
                 android:id="@+id/address_text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:textColorHint="#4A000000"
                 app:boxStrokeColor="#000000"
                 app:helperText="@string/required_field"
@@ -119,7 +170,9 @@
                 android:id="@+id/city_text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
                 android:textColorHint="#4A000000"
                 app:boxStrokeColor="#000000"
                 app:helperText="@string/required_field"
@@ -135,63 +188,22 @@
                     tools:ignore="TextContrastCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_text_input_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textColorHint="#4A000000"
-                app:boxStrokeColor="#000000"
-                app:endIconMode="password_toggle"
-                app:endIconTint="#4A000000"
-                app:helperText="@string/required_field"
-                app:helperTextTextColor="#4A000000">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    tools:ignore="TextContrastCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/rep_password_text_input_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textColorHint="#4A000000"
-                app:boxStrokeColor="#000000"
-                app:endIconMode="password_toggle"
-                app:endIconTint="#4A000000"
-                app:helperText="@string/required_field"
-                app:helperTextTextColor="#4A000000">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/rep_password_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:hint="@string/rep_password"
-                    android:inputType="textPassword"
-                    tools:ignore="TextContrastCheck,TextContrastCheck" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <Button
-                android:id="@+id/checkin_button"
+                android:id="@+id/save_button"
                 android:layout_width="250dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="32dp"
                 android:background="@drawable/round_button"
-                android:text="@string/check_in"
+                android:text="@string/save"
                 android:textAllCaps="false"
                 android:textSize="16sp"
-                tools:ignore="TextContrastCheck,TextContrastCheck" />
+                tools:ignore="TextContrastCheck" />
+
 
         </LinearLayout>
     </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

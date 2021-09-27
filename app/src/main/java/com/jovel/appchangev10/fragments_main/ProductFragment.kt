@@ -29,6 +29,7 @@ class ProductFragment : Fragment() {
     private var user: User? = null
     private lateinit var fav: MutableList<String>
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

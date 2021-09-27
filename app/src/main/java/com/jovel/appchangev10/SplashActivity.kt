@@ -14,6 +14,10 @@ import kotlin.concurrent.timerTask
 private lateinit var auth: FirebaseAuth
 
 class SplashActivity : AppCompatActivity() {
+
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -35,7 +39,14 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun goToLoginActivity() {
-        val intent = Intent(this,LoginActivity::class.java)
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun sendDataToMain(uid: String) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("id", uid)
         startActivity(intent)
         finish()
     }
