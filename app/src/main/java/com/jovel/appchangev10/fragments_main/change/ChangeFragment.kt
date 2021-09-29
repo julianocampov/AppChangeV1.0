@@ -46,6 +46,7 @@ class ChangeFragment : Fragment() {
     private lateinit var description: String
     private lateinit var ubication: String
     private lateinit var state: String
+    private lateinit var preferences: String
 
     private var numberPictures = 0
     private var imageCreated = false
@@ -77,9 +78,9 @@ class ChangeFragment : Fragment() {
                 titleProductEditText.setText(product.title)
                 descriptionProductEditText.setText(product.description)
                 ubicationProductEditText.setText(product.ubication)
+                myPreferencesProductEditText.setText(product.preferences)
 
-                val arraySpinner = resources.getStringArray(R.array.state_list)
-                stateSpinner.setSelection(arraySpinner.binarySearch(product.state))
+                stateSpinner.setSelection(product.state?.toInt()!!)
 
                 listCategoriesSelected = product.categories!!
                 loadCategories()
@@ -94,7 +95,8 @@ class ChangeFragment : Fragment() {
                         title = titleProductEditText.text.toString()
                         description = descriptionProductEditText.text.toString()
                         ubication = ubicationProductEditText.text.toString()
-                        state = stateSpinner.selectedItem.toString()
+                        state = stateSpinner.selectedItemPosition.toString()
+                        preferences = myPreferencesProductEditText.text.toString()
                     }
                     if (confirmInputs())
                         updateProduct(product.id)
@@ -107,6 +109,7 @@ class ChangeFragment : Fragment() {
                     description = descriptionProductEditText.text.toString()
                     ubication = ubicationProductEditText.text.toString()
                     state = stateSpinner.selectedItem.toString()
+                    preferences = myPreferencesProductEditText.text.toString()
                 }
                 if (confirmInputs())
                     saveProduct()
@@ -137,8 +140,9 @@ class ChangeFragment : Fragment() {
             documentUpdate["title"] = titleProductEditText.text.toString()
             documentUpdate["description"] = descriptionProductEditText.text.toString()
             documentUpdate["ubication"] = ubicationProductEditText.text.toString()
-            documentUpdate["state"] = stateSpinner.selectedItem.toString()
+            documentUpdate["state"] = stateSpinner.selectedItemPosition.toString()
             documentUpdate["categories"] = listCategoriesSelected
+            documentUpdate["preferences"] = preferences
         }
         val db = Firebase.firestore
         db.collection("products").document(id!!).update(documentUpdate).addOnSuccessListener {
@@ -148,10 +152,10 @@ class ChangeFragment : Fragment() {
     }
 
     private fun confirmInputs() : Boolean {
-        if (notEmptyFieldsChange(title, description, ubication, state) && listCategoriesSelected.isNotEmpty() && imageCreated) {
+        if (notEmptyFieldsChange(title, description, ubication, state ,preferences) && listCategoriesSelected.isNotEmpty() && imageCreated) {
             return true
         }
-        else if((!notEmptyFieldsChange(title, description, ubication, state) || listCategoriesSelected.isEmpty())){
+        else if((!notEmptyFieldsChange(title, description, ubication, state, preferences) || listCategoriesSelected.isEmpty())){
             Toast.makeText(requireContext(), R.string.missing_data, Toast.LENGTH_SHORT).show()
         }
         else{
@@ -269,10 +273,16 @@ class ChangeFragment : Fragment() {
         }
     }
 
-    private fun notEmptyFieldsChange(title: String, description: String, ubication: String, state: String): Boolean {
-        if (!(title.isNotEmpty() && description.isNotEmpty() && ubication.isNotEmpty() && state.isNotEmpty()))
+    private fun notEmptyFieldsChange(
+        title: String,
+        description: String,
+        ubication: String,
+        state: String,
+        preferences: String
+    ): Boolean {
+        if (!(title.isNotEmpty() && description.isNotEmpty() && ubication.isNotEmpty() && state.isNotEmpty() && preferences.isNotEmpty()))
             Toast.makeText(activity, "Algún campo está vacío", Toast.LENGTH_SHORT).show()
-        return title.isNotEmpty() && description.isNotEmpty() && ubication.isNotEmpty() && state.isNotEmpty()
+        return title.isNotEmpty() && description.isNotEmpty() && ubication.isNotEmpty() && state.isNotEmpty() && preferences.isNotEmpty()
     }
 
     private fun cleanViews() {
@@ -281,6 +291,7 @@ class ChangeFragment : Fragment() {
             titleProductEditText.setText("")
             descriptionProductEditText.setText("")
             ubicationProductEditText.setText("")
+            myPreferencesProductEditText.setText("")
             addProductImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_camera))
             listCategoriesSelected.clear()
             listCategories.clear()
