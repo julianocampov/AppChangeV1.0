@@ -84,5 +84,4 @@ class HomeFragment : Fragment() {
             categoriesAdapter.appendItems(listCategories)
         }
     }
-
 }
