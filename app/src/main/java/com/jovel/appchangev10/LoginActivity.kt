@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         val user = auth.currentUser
                         if (user != null) {
-                            sendDataToMain(user.uid)
+                            sendDataToMain()
                         }
                     } else {
                         val toast = Toast.makeText(

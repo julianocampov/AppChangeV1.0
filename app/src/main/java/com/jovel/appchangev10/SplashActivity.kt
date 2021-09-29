@@ -26,16 +26,18 @@ class SplashActivity : AppCompatActivity() {
         auth = Firebase.auth
         val id = auth.currentUser?.uid
 
-        if (id != null) {
-            sendDataToMain(id)
-        }else{
-            val timer = Timer()
-            timer.schedule(
-                timerTask {
+
+        val timer = Timer()
+        timer.schedule(
+            timerTask {
+                if (id != null) {
+                    sendDataToMain(id)
+                } else {
                     goToLoginActivity()
-                }, 1000
-            )
-        }
+                }
+            }, 1000
+        )
+
     }
 
     private fun goToLoginActivity() {
@@ -46,13 +48,6 @@ class SplashActivity : AppCompatActivity() {
 
     private fun sendDataToMain(uid: String) {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("id", uid)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun sendDataToMain(uid: String) {
-        val intent = Intent(this,MainActivity::class.java)
         intent.putExtra("id", uid)
         startActivity(intent)
         finish()

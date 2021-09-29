@@ -13,10 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -34,13 +34,19 @@ class ChangeFragment : Fragment() {
 
     private lateinit var changeBinding: FragmentChangeBinding
     private lateinit var categoriesAdapter: CategoriesTitleAdapter
+    private lateinit var categoriesSelectAdapter: CategoriesTitleAdapter
+
     private var listCategoriesSelected: MutableList<String> = arrayListOf()
+    private var listCategories: MutableList<Category> = arrayListOf()
+    private var selected: MutableList<Category> = arrayListOf()
+
     private val args: ChangeFragmentArgs by navArgs()
-    private lateinit var auth: FirebaseAuth
+
     private lateinit var title: String
     private lateinit var description: String
     private lateinit var ubication: String
     private lateinit var state: String
+
     private var numberPictures = 0
     private var imageCreated = false
 
@@ -52,7 +58,6 @@ class ChangeFragment : Fragment() {
                 changeBinding.addProductImageView.setImageBitmap(imageBitmap)
                 imageCreated = true
             }
-
         }
 
     override fun onCreateView(
@@ -64,8 +69,11 @@ class ChangeFragment : Fragment() {
 
         val product = args.product
 
+        initAdapters()
+
         if (product != null){
             with(changeBinding){
+
                 titleProductEditText.setText(product.title)
                 descriptionProductEditText.setText(product.description)
                 ubicationProductEditText.setText(product.ubication)
@@ -74,14 +82,25 @@ class ChangeFragment : Fragment() {
                 stateSpinner.setSelection(arraySpinner.binarySearch(product.state))
 
                 listCategoriesSelected = product.categories!!
+                loadCategories()
 
                 Picasso.get().load(product.urlImage).into(addProductImageView)
                 addProductButton.text = getString(R.string.update)
 
                 imageCreated = true
+
+                changeBinding.addProductButton.setOnClickListener {
+                    with(changeBinding) {
+                        title = titleProductEditText.text.toString()
+                        description = descriptionProductEditText.text.toString()
+                        ubication = ubicationProductEditText.text.toString()
+                        state = stateSpinner.selectedItem.toString()
+                    }
+                    if (confirmInputs())
+                        updateProduct(product.id)
+                }
             }
         } else {
-
             changeBinding.addProductButton.setOnClickListener {
                 with(changeBinding) {
                     title = titleProductEditText.text.toString()
@@ -89,28 +108,12 @@ class ChangeFragment : Fragment() {
                     ubication = ubicationProductEditText.text.toString()
                     state = stateSpinner.selectedItem.toString()
                 }
-                if (notEmptyFieldsChange(title, description, ubication, state) && listCategoriesSelected.isNotEmpty() && imageCreated) {
+                if (confirmInputs())
                     saveProduct()
-                }
-                else if((!notEmptyFieldsChange(title, description, ubication, state) || listCategoriesSelected.isEmpty())){
-                    Toast.makeText(requireContext(), R.string.missing_data, Toast.LENGTH_SHORT).show()
-                }
-                else{
-                    Toast.makeText(requireContext(), R.string.missing_picture, Toast.LENGTH_SHORT).show()
-                }
             }
         }
 
-        categoriesAdapter =
-            CategoriesTitleAdapter(onItemClicked = { onCategoryItemClicked(it) }) //TODO guardar categorias del producto
-        changeBinding.categoriesTitleRecyclerView.apply {
-            layoutManager =
-                LinearLayoutManager(this@ChangeFragment.context, RecyclerView.HORIZONTAL, false)
-            adapter = categoriesAdapter
-            setHasFixedSize(false)
-        }
-
-        loadFromFB()
+        loadCategoriesFromFB()
 
         with(changeBinding) {
             addPicturesButton.setOnClickListener {
@@ -128,10 +131,62 @@ class ChangeFragment : Fragment() {
         return changeBinding.root
     }
 
-    private fun loadFromFB() {
+    private fun updateProduct(id: String?) {
+        val documentUpdate = HashMap<String, Any>()
+        with(changeBinding){
+            documentUpdate["title"] = titleProductEditText.text.toString()
+            documentUpdate["description"] = descriptionProductEditText.text.toString()
+            documentUpdate["ubication"] = ubicationProductEditText.text.toString()
+            documentUpdate["state"] = stateSpinner.selectedItem.toString()
+            documentUpdate["categories"] = listCategoriesSelected
+        }
+        val db = Firebase.firestore
+        db.collection("products").document(id!!).update(documentUpdate).addOnSuccessListener {
+            Toast.makeText(requireContext(), "Producto actualizado", Toast.LENGTH_SHORT).show()
+            cleanViews()
+        }
+    }
+
+    private fun confirmInputs() : Boolean {
+        if (notEmptyFieldsChange(title, description, ubication, state) && listCategoriesSelected.isNotEmpty() && imageCreated) {
+            return true
+        }
+        else if((!notEmptyFieldsChange(title, description, ubication, state) || listCategoriesSelected.isEmpty())){
+            Toast.makeText(requireContext(), R.string.missing_data, Toast.LENGTH_SHORT).show()
+        }
+        else{
+            Toast.makeText(requireContext(), R.string.missing_picture, Toast.LENGTH_SHORT).show()
+        }
+        return false
+    }
+
+    private fun initAdapters() {
+        categoriesAdapter =
+            CategoriesTitleAdapter(onItemClicked = { onCategoryItemClicked(it) })
+        changeBinding.categoriesTitleRecyclerView.apply {
+            layoutManager =
+                LinearLayoutManager(this@ChangeFragment.context, RecyclerView.HORIZONTAL, false)
+            adapter = categoriesAdapter
+            setHasFixedSize(false)
+        }
+        categoriesAdapter.setBan(false)
+        categoriesAdapter.setContext(requireContext())
+
+        categoriesSelectAdapter =
+            CategoriesTitleAdapter(onItemClicked = { onCategoryItemUnselect(it) })
+        changeBinding.categoriesSelectedRecyclerView.apply {
+            layoutManager =
+                LinearLayoutManager(this@ChangeFragment.context, RecyclerView.HORIZONTAL, false)
+            adapter = categoriesSelectAdapter
+            setHasFixedSize(false)
+        }
+        categoriesSelectAdapter.setBan(true)
+        categoriesSelectAdapter.setContext(requireContext())
+    }
+
+    private fun loadCategoriesFromFB() {
         val db = Firebase.firestore
         db.collection("categories").get().addOnSuccessListener { result ->
-            val listCategories: MutableList<Category> = arrayListOf()
             for (document in result) {
                 val c: Category = document.toObject()
                 c.let { listCategories.add(it) }
@@ -140,15 +195,43 @@ class ChangeFragment : Fragment() {
         }
     }
 
+    private fun loadCategories() {
+        val db = Firebase.firestore
+        db.collection("categories").get().addOnSuccessListener { result ->
+            for (document in result) {
+                val c: Category = document.toObject()
+                if (listCategoriesSelected.contains(c.name)){
+                    selected.add(c)
+                    listCategories.remove(c)
+                }else {
+                    c.let { listCategories.add(it) }
+                }
+            }
+            categoriesAdapter.appendItems(listCategories)
+            categoriesSelectAdapter.appendItems(selected)
+        }
+    }
+
     private fun onCategoryItemClicked(category: Category) {
-        if (!listCategoriesSelected.contains(category.name))
-            category.name?.let { listCategoriesSelected.add(it) }
+        selected.add(category)
+        listCategories.remove(category)
+        categoriesSelectAdapter.appendItems(selected)
+        categoriesAdapter.appendItems(listCategories)
+        listCategoriesSelected.add(category.name!!)
+    }
+
+    private fun onCategoryItemUnselect(category: Category) {
+        selected.remove(category)
+        listCategories.add(category)
+        categoriesSelectAdapter.appendItems(selected)
+        categoriesAdapter.appendItems(listCategories)
+        listCategoriesSelected.remove(category.name!!)
     }
 
     private fun saveProduct() {
 
         val db = Firebase.firestore
-        auth = Firebase.auth
+        val auth = Firebase.auth
         val id_user = auth.currentUser?.uid
         val document_product_in_user = id_user?.let { db.collection("users").document(it).collection("products").document() }
         val id_product = document_product_in_user?.id
@@ -198,7 +281,13 @@ class ChangeFragment : Fragment() {
             titleProductEditText.setText("")
             descriptionProductEditText.setText("")
             ubicationProductEditText.setText("")
-            addProductImageView.setImageDrawable(resources.getDrawable(R.drawable.ic_camera))
+            addProductImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_camera))
+            listCategoriesSelected.clear()
+            listCategories.clear()
+            selected.clear()
+            categoriesSelectAdapter.appendItems(selected)
+            loadCategoriesFromFB()
+            activity?.onBackPressed()
         }
     }
 

@@ -154,17 +154,35 @@
                 android:entries="@array/state_list"
                 android:scrollbarSize="16dp" />
 
-            <TextView
-                android:id="@+id/categories_text_view"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/categories"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/categories_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/categories"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/categories_selected_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:orientation="horizontal"
+                    android:scrollbarSize="8dp"
+                    android:visibility="visible"
+                    tools:listitem="@layout/cardview_categories_no_icon">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categories_title_recycler_view"
