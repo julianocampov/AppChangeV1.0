@@ -153,12 +153,18 @@ class ProductFragment : Fragment() {
 
     private fun loadProductData(product: Product) {
         with(productBinding) {
+            val arraySpinner = resources.getStringArray(R.array.state_list)
             titleTextView.text = product.title
-            descriptionTextView.text = "Descripción : " + product.description
+            descriptionTextView.text = getString(R.string.descriptionConc, product.description ?: "")
             locationTextView.text = product.ubication
-            conditionTextView.text = "Condición : " + product.state
+            conditionTextView.text = getString(R.string.conditionConc, arraySpinner[product.state?.toInt()!!])
             nameOwnerTextView.text = product.idOwner
-            loadCategoriesTextView.text = "Categorias : " + product.categories
+            preferencesTextView.text = getString(R.string.preferencesConc, product.preferences ?: "")
+            var aux = ""
+            for (i in product.categories!!){
+                aux += i+"\n                       "
+            }
+            loadCategoriesTextView.text = getString(R.string.categoriesConc, aux)
         }
         if (product.urlImage != null)
             Picasso.get().load(product.urlImage).into(productBinding.productImgImageView)

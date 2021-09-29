@@ -58,6 +58,12 @@
     <string name="title_delete">Eliminar producto</string>
     <string name="cancel">Cancelar</string>
     <string name="update">Actualizar</string>
+    <string name="preferences">Interesado en</string>
+
+    <string name="descriptionConc">Descripción : %s</string>
+    <string name="conditionConc">Condición : %s</string>
+    <string name="preferencesConc">Preferencias : %s</string>
+    <string name="categoriesConc">Categorias : %s</string>
     <string name="delete">x</string>
 
 
