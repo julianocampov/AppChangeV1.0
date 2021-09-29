@@ -46,13 +46,29 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:backgroundTintMode="src_over">
+
+                <Button
+                    android:id="@+id/delete_picture_button"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="100dp"
+                    android:layout_marginBottom="100dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/round_button"
+                    android:text="@string/delete"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/edit_profile_image_view"
+                    app:layout_constraintEnd_toEndOf="@+id/edit_profile_image_view"
+                    tools:ignore="InefficientWeight,TextContrastCheck,TouchTargetSizeCheck" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/edit_profile_image_view"
                     android:layout_width="135dp"
                     android:layout_height="135dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -66,6 +82,8 @@
                     android:layout_weight="0"
                     android:background="@drawable/round_button"
                     android:text="@string/plus"
+                    android:textColorHighlight="#AA1212"
+                    android:textColorLink="#BA1919"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/edit_profile_image_view"
                     app:layout_constraintTop_toTopOf="@+id/edit_profile_image_view"
@@ -104,15 +122,13 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:textColorHint="#4A000000"
-                app:boxStrokeColor="#000000"
-                app:helperText="@string/required_field"
-                app:helperTextTextColor="#4A000000">
+                app:boxStrokeColor="#000000">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
+                    android:background="#EDECEC"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
@@ -127,16 +143,12 @@
                 android:layout_marginEnd="8dp"
                 android:textColorHint="#4A000000"
                 app:boxStrokeColor="#000000"
-                app:helperText="@string/required_field"
                 app:helperTextTextColor="#4A000000">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/phone_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
                     android:background="#FFFFFF"
                     android:hint="@string/number"
                     android:inputType="phone"
@@ -153,7 +165,6 @@
                 android:layout_marginEnd="8dp"
                 android:textColorHint="#4A000000"
                 app:boxStrokeColor="#000000"
-                app:helperText="@string/required_field"
                 app:helperTextTextColor="#4A000000">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -175,7 +186,6 @@
                 android:layout_marginEnd="8dp"
                 android:textColorHint="#4A000000"
                 app:boxStrokeColor="#000000"
-                app:helperText="@string/required_field"
                 app:helperTextTextColor="#4A000000">
 
                 <com.google.android.material.textfield.TextInputEditText
