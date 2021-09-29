@@ -35,8 +35,6 @@ class UpdateInfoFragment : Fragment() {
     private lateinit var user: User
     private lateinit var name: String
     private lateinit var email: String
-    private lateinit var password: String
-    private lateinit var reppassword: String
     private lateinit var phone: String
     private lateinit var address: String
     private lateinit var city: String
@@ -54,7 +52,7 @@ class UpdateInfoFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         auth = Firebase.auth
         val id = auth.currentUser?.uid

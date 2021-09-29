@@ -108,7 +108,7 @@ class ChangeFragment : Fragment() {
                     title = titleProductEditText.text.toString()
                     description = descriptionProductEditText.text.toString()
                     ubication = ubicationProductEditText.text.toString()
-                    state = stateSpinner.selectedItem.toString()
+                    state = stateSpinner.selectedItemPosition.toString()
                     preferences = myPreferencesProductEditText.text.toString()
                 }
                 if (confirmInputs())

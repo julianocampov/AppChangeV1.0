@@ -31,5 +31,10 @@
         android:layout_height="3dp"
         android:background="@color/color_app" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/card_view_chat_item" />
+
 
 </LinearLayout>
