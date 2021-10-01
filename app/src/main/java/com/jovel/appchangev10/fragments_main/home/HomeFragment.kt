@@ -1,10 +1,12 @@
 package com.jovel.appchangev10.fragments_main.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView.OnQueryTextListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,11 +23,14 @@ class HomeFragment : Fragment() {
     private lateinit var homeBinding: FragmentHomeBinding
     private lateinit var productsAdapter: ProductsAdapter
     private lateinit var categoriesAdapter: CategoriesAdapter
+    private var auxList : MutableList<String> = arrayListOf()
+    private val auxList1 : MutableList<String> = arrayListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        homeBinding.searchView.clearFocus()
 
         productsAdapter = ProductsAdapter( onItemClicked = {onProductItemClicked(it)} )
         homeBinding.productsRecyclerView.apply {
@@ -43,11 +48,48 @@ class HomeFragment : Fragment() {
 
         loadFromFB()
 
+        homeBinding.searchView.setOnQueryTextListener(object : OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                auxList.clear()
+                auxList.addAll(auxList1)
+                homeBinding.searchView.clearFocus()
+                auxList.retainAll { it.contains(query!!) }
+                reloadProducts(auxList)
+                return false
+            }
+
+            private fun reloadProducts(list: MutableList<String>) {
+                val db = Firebase.firestore
+                db.collection("products").get().addOnSuccessListener { result ->
+                    val listProducts: MutableList<Product> = arrayListOf()
+                    for (document in result){
+                        val product : Product = document.toObject()
+
+                        if(list.contains(product.title)) {
+                            listProducts.add(document.toObject())
+                        }
+                    }
+                    productsAdapter.appendItems(listProducts)
+                }
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                auxList.clear()
+                auxList.addAll(auxList1)
+                if (newText != " ")
+                    auxList.retainAll { it.contains(newText!!) }
+                Log.d("erstr", auxList.toString())
+                return false
+            }
+        })
+
         return homeBinding.root
     }
 
     private fun onCategoryItemClicked(category: Category) {
         val db = Firebase.firestore
+        auxList1.clear()
         db.collection("products").get().addOnSuccessListener { result ->
             val listProducts: MutableList<Product> = arrayListOf()
             for (document in result){
@@ -55,6 +97,7 @@ class HomeFragment : Fragment() {
 
                 if(product.categories?.contains(category.name) == true || category.name == "Todo") {
                     listProducts.add(document.toObject())
+                    auxList1.add(product.title!!)
                 }
             }
             productsAdapter.appendItems(listProducts)
@@ -68,10 +111,12 @@ class HomeFragment : Fragment() {
 
     private fun loadFromFB() {
         val db = Firebase.firestore
+        val listProducts: MutableList<Product> = arrayListOf()
         db.collection("products").get().addOnSuccessListener { result ->
-            val listProducts: MutableList<Product> = arrayListOf()
             for (document in result){
-                listProducts.add(document.toObject())
+                val prod : Product = document.toObject()
+                listProducts.add(prod)
+                auxList1.add(prod.title!!)
             }
             productsAdapter.appendItems(listProducts)
         }

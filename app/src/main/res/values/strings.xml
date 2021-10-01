@@ -65,6 +65,7 @@
     <string name="preferencesConc">Preferencias : %s</string>
     <string name="categoriesConc">Categorias : %s</string>
     <string name="delete">x</string>
+    <string name="search_in_appchange">Busca en AppChange</string>
 
 
 </resources>
