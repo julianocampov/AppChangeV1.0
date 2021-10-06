@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_updateInfoFragment"
             app:destination="@id/updateInfoFragment" />
+        <action
+            android:id="@+id/action_navigation_profile_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_favorites"
@@ -69,5 +72,14 @@
         android:name="com.jovel.appchangev10.fragments_main.profile.UpdateInfoFragment"
         android:label="fragment_update_info"
         tools:layout="@layout/fragment_update_info" >
+    </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.jovel.appchangev10.fragments_main.profile.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" >
+        <argument
+            android:name="user"
+            app:argType="com.jovel.appchangev10.model.User" />
     </fragment>
 </navigation>

@@ -66,6 +66,11 @@
     <string name="categoriesConc">Categorias : %s</string>
     <string name="delete">x</string>
     <string name="search_in_appchange">Busca en AppChange</string>
+    <string name="title_change_password">Cambia tu contraseña</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="incorrect_password">Contraseña incorrecta</string>
+    <string name="password_updated">Contraseña actualizada</string>
+    <string name="password_not_updated">No se pudo actualizar la contraseña</string>
 
 
 </resources>

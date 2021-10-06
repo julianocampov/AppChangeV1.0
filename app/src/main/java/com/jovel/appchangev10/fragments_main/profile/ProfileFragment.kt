@@ -96,8 +96,11 @@ class ProfileFragment : Fragment() {
                 startActivity(intent)
                 onDetach()
             }
-            R.id.ch_personal_info-> {
+            R.id.ch_personal_info -> {
                 findNavController().navigate(ProfileFragmentDirections.actionNavigationProfileToUpdateInfoFragment())
+            }
+            R.id.ch_password -> {
+                findNavController().navigate(ProfileFragmentDirections.actionNavigationProfileToChangePasswordFragment(user))
             }
         }
         return super.onOptionsItemSelected(item)
