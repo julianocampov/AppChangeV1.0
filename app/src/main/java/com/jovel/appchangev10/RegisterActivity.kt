@@ -74,6 +74,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun createStorageUser() {
+        val noImage = "https://firebasestorage.googleapis.com/v0/b/appchange-ccfdf.appspot.com/o/not_picture.png?alt=media&token=1ced8309-815a-4d2d-b009-c27709afd9ac"
         val id = auth.currentUser?.uid
         id?.let {
             val user = User(
@@ -83,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
                 qualification = 0.0,
                 changes = 0,
                 phone = phone,
-                urlProfileImage = null,
+                urlProfileImage = noImage,
                 address = address,
                 city = city,
                 favorites = null,

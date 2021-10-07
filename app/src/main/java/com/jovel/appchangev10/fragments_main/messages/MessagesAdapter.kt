@@ -5,22 +5,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jovel.appchangev10.R
+import com.jovel.appchangev10.databinding.CardviewSimpleMessageBinding
+import com.jovel.appchangev10.model.Message
 
-class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.Viewholder>() {
+class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_view_chat_item, parent, false)
-        return Viewholder(view)
+    private val listMessages : MutableList<Message> = mutableListOf()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.cardview_simple_message,parent,false)
+        return  ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: Viewholder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(listMessages[position])
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun getItemCount(): Int = listMessages.size
 
-    class Viewholder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val binding = CardviewSimpleMessageBinding.bind((view))
+
+        fun bind(message: Message) {
+
+        }
 
     }
 }

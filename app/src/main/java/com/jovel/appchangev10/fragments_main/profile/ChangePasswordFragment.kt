@@ -1,8 +1,6 @@
 package com.jovel.appchangev10.fragments_main.profile
 
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +14,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.jovel.appchangev10.R
 import com.jovel.appchangev10.databinding.FragmentChangePasswordBinding
-import com.google.firebase.firestore.auth.User
 
 
 class ChangePasswordFragment : Fragment() {

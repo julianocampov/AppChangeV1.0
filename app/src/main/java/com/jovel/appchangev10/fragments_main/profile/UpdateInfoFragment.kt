@@ -53,6 +53,8 @@ class UpdateInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        updateInfoFragmentBinding =
+            FragmentUpdateInfoBinding.inflate(inflater, container, false)
 
         auth = Firebase.auth
         val id = auth.currentUser?.uid
@@ -67,36 +69,34 @@ class UpdateInfoFragment : Fragment() {
                 }
             }
 
+        with(updateInfoFragmentBinding) {
 
+            toolbar3.setNavigationOnClickListener {
+                activity?.onBackPressed()
+            }
 
-        updateInfoFragmentBinding = FragmentUpdateInfoBinding.inflate(inflater, container, false)
+            addPictureButton.setOnClickListener {
+                dispatchTakePictureIntent()
+            }
 
-        updateInfoFragmentBinding.toolbar3.setNavigationOnClickListener {
-            activity?.onBackPressed()
-        }
-
-        updateInfoFragmentBinding.addPictureButton.setOnClickListener {
-            dispatchTakePictureIntent()
-        }
-
-        updateInfoFragmentBinding.saveButton.setOnClickListener {
-            readTextInputs()
-            if (name != null && validateName() && imageCreated) {
-                updateInfoFragmentBinding.nameEditText.doAfterTextChanged {
-                    updateInfoFragmentBinding.nameTextInputLayout.error = null
+            saveButton.setOnClickListener {
+                readTextInputs()
+                if (name != null && validateName() && imageCreated) {
+                    nameEditText.doAfterTextChanged {
+                        nameTextInputLayout.error = null
+                    }
+                    saveUser()
+                } else {
+                    updateInfo("", id.toString(), db)
                 }
-                saveUser()
-            }else{
-                updateInfo("",id.toString(),db)
+            }
+            deletePictureButton.setOnClickListener {
+                imageCreated = false
+                Picasso.get().load(R.drawable.not_picture)
+                    .into(updateInfoFragmentBinding.editProfileImageView)
+
             }
         }
-        updateInfoFragmentBinding.deletePictureButton.setOnClickListener {
-            imageCreated = false
-            Picasso.get().load(R.drawable.not_picture)
-                .into(updateInfoFragmentBinding.editProfileImageView)
-
-        }
-
         return updateInfoFragmentBinding.root
     }
 
@@ -148,6 +148,7 @@ class UpdateInfoFragment : Fragment() {
 
 
     private fun updateInfo(urlProfileImage: String, id_user: String, db: FirebaseFirestore) {
+        val noImage = "https://firebasestorage.googleapis.com/v0/b/appchange-ccfdf.appspot.com/o/not_picture.png?alt=media&token=1ced8309-815a-4d2d-b009-c27709afd9ac"
         val documentUpdate = HashMap<String, Any>()
         documentUpdate["name"] = updateInfoFragmentBinding.nameEditText.text.toString()
         documentUpdate["email"] = updateInfoFragmentBinding.emailEditText.text.toString()
@@ -157,7 +158,7 @@ class UpdateInfoFragment : Fragment() {
         if(urlProfileImage.isNotEmpty()){
             documentUpdate["urlProfileImage"] = urlProfileImage
         }else{
-            db.collection("users").document(id_user).update("urlProfileImage", null)
+            db.collection("users").document(id_user).update("urlProfileImage", noImage)
         }
 
         db.collection("users").document(id_user).update(documentUpdate)

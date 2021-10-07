@@ -32,6 +32,7 @@
         android:background="@color/color_app" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messages_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/card_view_chat_item" />
