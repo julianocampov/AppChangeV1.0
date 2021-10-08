@@ -1,7 +1,6 @@
 package com.jovel.appchangev10.fragments_main.home
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +46,12 @@ class HomeFragment : Fragment() {
         }
 
         loadFromFB()
+        onSearch()
+
+        return homeBinding.root
+    }
+
+    private fun onSearch() {
 
         homeBinding.searchView.setOnQueryTextListener(object : OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -79,12 +84,9 @@ class HomeFragment : Fragment() {
                 auxList.addAll(auxList1)
                 if (newText != " ")
                     auxList.retainAll { it.contains(newText!!) }
-                Log.d("erstr", auxList.toString())
                 return false
             }
         })
-
-        return homeBinding.root
     }
 
     private fun onCategoryItemClicked(category: Category) {
@@ -105,7 +107,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun onProductItemClicked(product: Product) {
-        //TODO ir a fragment product
         findNavController().navigate(HomeFragmentDirections.actionNavigationHomeToProductFragment(product))
     }
 

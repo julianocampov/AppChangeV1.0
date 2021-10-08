@@ -38,7 +38,7 @@ class MessagesFragment : Fragment() {
         val auth = Firebase.auth
         val db = Firebase.firestore
         val id = auth.currentUser?.uid
-        var listChat : MutableList<Chat> = arrayListOf()
+        val listChat : MutableList<Chat> = arrayListOf()
 
         db.collection("users").document(id!!).collection("chats").get().addOnSuccessListener {
             for (document in it){

@@ -1,9 +1,12 @@
 package com.jovel.appchangev10.fragments_main.messages
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.jovel.appchangev10.R
 import com.jovel.appchangev10.databinding.CardviewSimpleMessageBinding
 import com.jovel.appchangev10.model.Message
@@ -23,11 +26,30 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = listMessages.size
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun appendItems(newItems: MutableList<Message>){
+        listMessages.clear()
+        listMessages.addAll(newItems)
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = CardviewSimpleMessageBinding.bind((view))
+        val auth = Firebase.auth
+        val user = auth.currentUser?.uid
 
         fun bind(message: Message) {
+            if (user == message.from){
+                binding.myMsgLayout.visibility = View.VISIBLE
+                binding.otherMsgLayout.visibility = View.GONE
 
+                binding.myMsgTextView.text = message.message
+            }else{
+                binding.myMsgLayout.visibility = View.GONE
+                binding.otherMsgLayout.visibility = View.VISIBLE
+
+                binding.otherMsgTextView.text = message.message
+            }
         }
 
     }

@@ -1,5 +1,6 @@
 package com.jovel.appchangev10.fragments_main.messages
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,7 @@ class ChatsAdapter (
     private val onMessageClicked : (Chat) -> Unit
 ) : RecyclerView.Adapter<ChatsAdapter.ViewHolder>() {
 
-    private val listMessage : MutableList<Chat> = mutableListOf()
+    private val listChats : MutableList<Chat> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.card_view_chat_item, parent, false)
@@ -26,15 +27,16 @@ class ChatsAdapter (
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(listMessage[position])
-        holder.itemView.setOnClickListener{ onMessageClicked(listMessage[position])}
+        holder.bind(listChats[position])
+        holder.itemView.setOnClickListener{ onMessageClicked(listChats[position])}
     }
 
-    override fun getItemCount(): Int = listMessage.size
+    override fun getItemCount(): Int = listChats.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun appendItems(newItems: MutableList<Chat>){
-        listMessage.clear()
-        listMessage.addAll(newItems)
+        listChats.clear()
+        listChats.addAll(newItems)
         notifyDataSetChanged()
     }
 

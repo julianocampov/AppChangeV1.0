@@ -81,7 +81,7 @@ class UpdateInfoFragment : Fragment() {
 
             saveButton.setOnClickListener {
                 readTextInputs()
-                if (name != null && validateName() && imageCreated) {
+                if (name != "" && validateName() && imageCreated) {
                     nameEditText.doAfterTextChanged {
                         nameTextInputLayout.error = null
                     }
@@ -165,6 +165,7 @@ class UpdateInfoFragment : Fragment() {
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Usuario actualizado", Toast.LENGTH_SHORT)
                     .show()
+                activity?.onBackPressed()
             }
     }
 
@@ -175,7 +176,7 @@ class UpdateInfoFragment : Fragment() {
     }
 
 
-    private fun loadData(user: com.jovel.appchangev10.model.User) {
+    private fun loadData(user: User) {
         with(updateInfoFragmentBinding) {
             nameEditText.setText(user.name)
             emailEditText.setText(user.email)

@@ -71,6 +71,7 @@
     <string name="incorrect_password">Contraseña incorrecta</string>
     <string name="password_updated">Contraseña actualizada</string>
     <string name="password_not_updated">No se pudo actualizar la contraseña</string>
+    <string name="message">Mensaje</string>
 
 
 </resources>
