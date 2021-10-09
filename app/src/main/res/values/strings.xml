@@ -75,6 +75,7 @@
     <string name="head_change">Hola, quieres cambiar</string>
     <string name="product">Producto</string>
     <string name="for_change">por</string>
+    <string name="my_products">Mis Productos</string>
 
 
 </resources>

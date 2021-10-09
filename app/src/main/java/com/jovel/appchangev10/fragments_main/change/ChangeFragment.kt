@@ -72,36 +72,8 @@ class ChangeFragment : Fragment() {
 
         initAdapters()
 
-        if (product != null){
-            with(changeBinding){
-
-                titleProductEditText.setText(product.title)
-                descriptionProductEditText.setText(product.description)
-                ubicationProductEditText.setText(product.ubication)
-                myPreferencesProductEditText.setText(product.preferences)
-
-                stateSpinner.setSelection(product.state?.toInt()!!)
-
-                listCategoriesSelected = product.categories!!
-                loadCategories()
-
-                Picasso.get().load(product.urlImage).into(addProductImageView)
-                addProductButton.text = getString(R.string.update)
-
-                imageCreated = true
-
-                changeBinding.addProductButton.setOnClickListener {
-                    with(changeBinding) {
-                        title = titleProductEditText.text.toString()
-                        description = descriptionProductEditText.text.toString()
-                        ubication = ubicationProductEditText.text.toString()
-                        state = stateSpinner.selectedItemPosition.toString()
-                        preferences = myPreferencesProductEditText.text.toString()
-                    }
-                    if (confirmInputs())
-                        updateProduct(product.id)
-                }
-            }
+        if (product != null) {
+            loadProductFromArgs(product)
         } else {
             changeBinding.addProductButton.setOnClickListener {
                 with(changeBinding) {
@@ -119,24 +91,56 @@ class ChangeFragment : Fragment() {
         loadCategoriesFromFB()
 
         with(changeBinding) {
+
             addPicturesButton.setOnClickListener {
                 dispatchTakePictureIntent()
             }
 
             toolbar3.setNavigationOnClickListener {
                 cleanViews()
-                imageCreated = false
-                listCategoriesSelected.clear()
-                Toast.makeText(requireContext(), "Campos limpiados", Toast.LENGTH_SHORT).show()
             }
         }
 
         return changeBinding.root
     }
 
+    private fun loadProductFromArgs(product: Product) {
+
+        with(changeBinding) {
+
+            titleProductEditText.setText(product.title)
+            descriptionProductEditText.setText(product.description)
+            ubicationProductEditText.setText(product.ubication)
+            myPreferencesProductEditText.setText(product.preferences)
+
+
+            stateSpinner.setSelection(product.state?.toInt()!!)
+
+            listCategoriesSelected = product.categories!!
+            loadCategories()
+
+            Picasso.get().load(product.urlImage).into(addProductImageView)
+            addProductButton.text = getString(R.string.update)
+
+            imageCreated = true
+
+            changeBinding.addProductButton.setOnClickListener {
+                with(changeBinding) {
+                    title = titleProductEditText.text.toString()
+                    description = descriptionProductEditText.text.toString()
+                    ubication = ubicationProductEditText.text.toString()
+                    state = stateSpinner.selectedItemPosition.toString()
+                    preferences = myPreferencesProductEditText.text.toString()
+                }
+                if (confirmInputs())
+                    updateProduct(product.id)
+            }
+        }
+    }
+
     private fun updateProduct(id: String?) {
         val documentUpdate = HashMap<String, Any>()
-        with(changeBinding){
+        with(changeBinding) {
             documentUpdate["title"] = titleProductEditText.text.toString()
             documentUpdate["description"] = descriptionProductEditText.text.toString()
             documentUpdate["ubication"] = ubicationProductEditText.text.toString()
@@ -144,21 +148,42 @@ class ChangeFragment : Fragment() {
             documentUpdate["categories"] = listCategoriesSelected
             documentUpdate["preferences"] = preferences
         }
+
         val db = Firebase.firestore
-        db.collection("products").document(id!!).update(documentUpdate).addOnSuccessListener {
-            Toast.makeText(requireContext(), "Producto actualizado", Toast.LENGTH_SHORT).show()
-            cleanViews()
-        }
+        val auth = Firebase.auth
+
+        db.collection("users").document(auth.currentUser?.uid!!)
+            .collection("products").document(id!!)
+            .update(documentUpdate).addOnSuccessListener {
+                db.collection("products").document(id).update(documentUpdate).addOnSuccessListener {
+                    Toast.makeText(requireContext(), "Producto actualizado", Toast.LENGTH_SHORT)
+                        .show()
+                    cleanViews()
+                    activity?.onBackPressed()
+                }
+            }
     }
 
-    private fun confirmInputs() : Boolean {
-        if (notEmptyFieldsChange(title, description, ubication, state ,preferences) && listCategoriesSelected.isNotEmpty() && imageCreated) {
+    private fun confirmInputs(): Boolean {
+        if (notEmptyFieldsChange(
+                title,
+                description,
+                ubication,
+                state,
+                preferences
+            ) && listCategoriesSelected.isNotEmpty() && imageCreated
+        ) {
             return true
-        }
-        else if((!notEmptyFieldsChange(title, description, ubication, state, preferences) || listCategoriesSelected.isEmpty())){
+        } else if ((!notEmptyFieldsChange(
+                title,
+                description,
+                ubication,
+                state,
+                preferences
+            ) || listCategoriesSelected.isEmpty())
+        ) {
             Toast.makeText(requireContext(), R.string.missing_data, Toast.LENGTH_SHORT).show()
-        }
-        else{
+        } else {
             Toast.makeText(requireContext(), R.string.missing_picture, Toast.LENGTH_SHORT).show()
         }
         return false
@@ -204,10 +229,10 @@ class ChangeFragment : Fragment() {
         db.collection("categories").get().addOnSuccessListener { result ->
             for (document in result) {
                 val c: Category = document.toObject()
-                if (listCategoriesSelected.contains(c.name)){
+                if (listCategoriesSelected.contains(c.name)) {
                     selected.add(c)
                     listCategories.remove(c)
-                }else {
+                } else {
                     c.let { listCategories.add(it) }
                 }
             }
@@ -237,7 +262,8 @@ class ChangeFragment : Fragment() {
         val db = Firebase.firestore
         val auth = Firebase.auth
         val id_user = auth.currentUser?.uid
-        val document_product_in_user = id_user?.let { db.collection("users").document(it).collection("products").document() }
+        val document_product_in_user =
+            id_user?.let { db.collection("users").document(it).collection("products").document() }
         val id_product = document_product_in_user?.id
 
         val storageRef = FirebaseStorage.getInstance()
@@ -261,7 +287,17 @@ class ChangeFragment : Fragment() {
         }?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val urlPicture = task.result.toString()
-                val product = Product(id = id_product, idOwner = id_user, ubication = ubication, urlImage = urlPicture, title = title, description = description, state = state, categories = listCategoriesSelected)
+                val product = Product(
+                    id = id_product,
+                    idOwner = id_user,
+                    ubication = ubication,
+                    urlImage = urlPicture,
+                    title = title,
+                    description = description,
+                    state = state,
+                    categories = listCategoriesSelected,
+                    preferences = preferences
+                )
                 id_product.let { db.collection("products").document(it).set(product) }
                 id_user.let {
                     db.collection("users").document(it).collection("products").document(id_product)
@@ -269,6 +305,7 @@ class ChangeFragment : Fragment() {
                 }
                 Toast.makeText(requireContext(), "Producto creado", Toast.LENGTH_SHORT).show()
                 cleanViews()
+                activity?.onBackPressed()
             }
         }
     }
@@ -288,17 +325,22 @@ class ChangeFragment : Fragment() {
     private fun cleanViews() {
         with(changeBinding) {
             numberPictures = 0
+            imageCreated = false
             titleProductEditText.setText("")
             descriptionProductEditText.setText("")
             ubicationProductEditText.setText("")
             myPreferencesProductEditText.setText("")
-            addProductImageView.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_camera))
+            addProductImageView.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_camera
+                )
+            )
             listCategoriesSelected.clear()
             listCategories.clear()
             selected.clear()
             categoriesSelectAdapter.appendItems(selected)
             loadCategoriesFromFB()
-            activity?.onBackPressed()
         }
     }
 

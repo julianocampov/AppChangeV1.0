@@ -59,17 +59,17 @@
     </fragment>
     <fragment
         android:id="@+id/productFragment"
-        android:name="com.jovel.appchangev10.fragments_main.ProductFragment"
+        android:name="com.jovel.appchangev10.fragments_main.product.ProductFragment"
         android:label="Producto" >
         <argument
             android:name="product"
             app:argType="com.jovel.appchangev10.model.Product" />
         <action
-            android:id="@+id/action_productFragment_to_navigation_home"
-            app:destination="@id/navigation_home" />
-        <action
             android:id="@+id/action_productFragment_to_navigation_change"
             app:destination="@id/navigation_change" />
+        <action
+            android:id="@+id/action_productFragment_to_myProductsFragment"
+            app:destination="@id/myProductsFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateInfoFragment"
@@ -94,5 +94,14 @@
         <argument
             android:name="chat"
             app:argType="com.jovel.appchangev10.model.Chat" />
+    </fragment>
+    <fragment
+        android:id="@+id/myProductsFragment"
+        android:name="com.jovel.appchangev10.fragments_main.product.MyProductsFragment"
+        android:label="fragment_my_products"
+        tools:layout="@layout/fragment_my_products" >
+        <argument
+            android:name="otherProduct"
+            app:argType="com.jovel.appchangev10.model.Product" />
     </fragment>
 </navigation>

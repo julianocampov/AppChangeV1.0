@@ -1,4 +1,4 @@
-package com.jovel.appchangev10.fragments_main
+package com.jovel.appchangev10.fragments_main.product
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -28,6 +28,7 @@ class ProductFragment : Fragment() {
     private val args: ProductFragmentArgs by navArgs()
     private var user: User? = null
     private lateinit var fav: MutableList<String>
+    private lateinit var product: Product
 
 
     override fun onCreateView(
@@ -36,37 +37,34 @@ class ProductFragment : Fragment() {
     ): View {
         productBinding = FragmentProductBinding.inflate(inflater, container, false)
 
-        val product = args.product
+        val idProduct = args.product.id
         auth = Firebase.auth
         val id = auth.currentUser?.uid
         val db = Firebase.firestore
 
-        loadUser(id, db)
-        loadOwnerFromFB(db, product)
-        loadProductData(product)
 
-        if (id == product.idOwner) {
-            adminProduct(id, db, product)
+        db.collection("products").document(idProduct!!).get().addOnSuccessListener {
 
-        } else {
-            loadFavorites(id, db, product)
+            product = it.toObject()!!
 
-            productBinding.likeTextView.setOnClickListener {
-                if (user != null) {
-                    fav = user!!.favorites!!
+            showProductData(product)
+            loadUser(id, db)
+            loadOwnerFromFB(db, product)
 
-                    if (!user!!.favorites!!.contains(product.id)) {
-                        fav.add(product.id.toString())
-                        if (id != null)
-                            db.collection("users").document(id).update("favorites", fav)
-                        productBinding.likeTextView.setBackgroundResource(R.drawable.ic_favorite)
+            if (id == product.idOwner) {
+                adminProduct(id, db, product)
+            } else {
+                loadFavorites(id, db, product)
 
-                    } else {
-                        fav.remove(product.id.toString())
-                        if (id != null)
-                            db.collection("users").document(id).update("favorites", fav)
-                        productBinding.likeTextView.setBackgroundResource(R.drawable.ic_favorite_border)
-                    }
+                productBinding.likeTextView.setOnClickListener {
+                    addToFavorites(id, db, product)
+                }
+                productBinding.changeButton.setOnClickListener {
+                    findNavController().navigate(
+                        ProductFragmentDirections.actionProductFragmentToMyProductsFragment(
+                            product
+                        )
+                    )
                 }
             }
         }
@@ -78,15 +76,39 @@ class ProductFragment : Fragment() {
         return productBinding.root
     }
 
+    private fun addToFavorites(id: String?, db: FirebaseFirestore, product: Product) {
+        if (user != null) {
+            fav = user!!.favorites!!
+
+            if (!user!!.favorites!!.contains(product.id)) {
+                fav.add(product.id.toString())
+                if (id != null)
+                    db.collection("users").document(id).update("favorites", fav)
+                productBinding.likeTextView.setBackgroundResource(R.drawable.ic_favorite)
+
+            } else {
+                fav.remove(product.id.toString())
+                if (id != null)
+                    db.collection("users").document(id).update("favorites", fav)
+                productBinding.likeTextView.setBackgroundResource(R.drawable.ic_favorite_border)
+            }
+        }
+    }
+
     private fun adminProduct(id: String?, db: FirebaseFirestore, product: Product) {
 
         with(productBinding) {
 
+            changeButton.visibility = View.GONE
             likeTextView.setBackgroundResource(R.drawable.ic_delete)
             editTextView.setBackgroundResource(R.drawable.ic_edit)
 
             editTextView.setOnClickListener {
-                findNavController().navigate(ProductFragmentDirections.actionProductFragmentToNavigationChange(product))
+                findNavController().navigate(
+                    ProductFragmentDirections.actionProductFragmentToNavigationChange(
+                        product
+                    )
+                )
             }
 
             likeTextView.setOnClickListener {
@@ -96,16 +118,10 @@ class ProductFragment : Fragment() {
                         setTitle(R.string.title_delete)
                         setMessage(getString(R.string.alert_delete_product))
                         setPositiveButton(R.string.accept) { dialog, it ->
-                            db.collection("products").document(product.id!!).delete()
-                            db.collection("users").document(id!!)
-                                .collection("products").document(product.id!!).delete()
-
-                            val storageRef = FirebaseStorage.getInstance()
-                            val pictureRef = storageRef.reference.child("products").child(product.id!!)
-                            pictureRef.delete()
-                            activity?.onBackPressed()
+                            deleteProduct(id, db)
                         }
                         setNegativeButton(R.string.cancel) { dialog, id ->
+
                         }
                     }
                     builder.create()
@@ -115,14 +131,22 @@ class ProductFragment : Fragment() {
         }
     }
 
+    private fun deleteProduct(id: String?, db: FirebaseFirestore) {
+        db.collection("products").document(product.id!!).delete()
+        db.collection("users").document(id!!)
+            .collection("products").document(product.id!!).delete()
+
+        val storageRef = FirebaseStorage.getInstance()
+        val pictureRef =
+            storageRef.reference.child("products").child(product.id!!)
+        pictureRef.delete()
+        activity?.onBackPressed()
+    }
+
     private fun loadUser(id: String?, db: FirebaseFirestore) {
-        db.collection("users").get()
+        db.collection("users").document(id!!).get()
             .addOnSuccessListener {
-                for (document in it) {
-                    if (document.id == id) {
-                        user = document.toObject()
-                    }
-                }
+                user = it.toObject()
             }
     }
 
@@ -139,30 +163,29 @@ class ProductFragment : Fragment() {
     }
 
     private fun loadOwnerFromFB(db: FirebaseFirestore, product: Product) {
-        db.collection("users").get().addOnSuccessListener {
-            for (document in it) {
-                if (document.id == product.idOwner) {
-                    val user: User = document.toObject()
-                    productBinding.nameOwnerTextView.text = user.name
-                    Picasso.get().load(user.urlProfileImage)
-                        .into(productBinding.profileOwnerImageView)
-                }
-            }
+        db.collection("users").document(product.idOwner!!).get().addOnSuccessListener {
+            val user: User = it.toObject()!!
+            productBinding.nameOwnerTextView.text = user.name
+            Picasso.get().load(user.urlProfileImage)
+                .into(productBinding.profileOwnerImageView)
         }
     }
 
-    private fun loadProductData(product: Product) {
+    private fun showProductData(product: Product) {
         with(productBinding) {
             val arraySpinner = resources.getStringArray(R.array.state_list)
             titleTextView.text = product.title
-            descriptionTextView.text = getString(R.string.descriptionConc, product.description ?: "")
+            descriptionTextView.text =
+                getString(R.string.descriptionConc, product.description ?: "")
             locationTextView.text = product.ubication
-            conditionTextView.text = getString(R.string.conditionConc, arraySpinner[product.state?.toInt()!!])
+            conditionTextView.text =
+                getString(R.string.conditionConc, arraySpinner[product.state?.toInt()!!])
             nameOwnerTextView.text = product.idOwner
-            preferencesTextView.text = getString(R.string.preferencesConc, product.preferences ?: "")
+            preferencesTextView.text =
+                getString(R.string.preferencesConc, product.preferences ?: "")
             var aux = ""
-            for (i in product.categories!!){
-                aux += i+"\n                       "
+            for (i in product.categories!!) {
+                aux += i + "\n                       "
             }
             loadCategoriesTextView.text = getString(R.string.categoriesConc, aux)
         }

@@ -148,7 +148,6 @@ class UpdateInfoFragment : Fragment() {
 
 
     private fun updateInfo(urlProfileImage: String, id_user: String, db: FirebaseFirestore) {
-        val noImage = "https://firebasestorage.googleapis.com/v0/b/appchange-ccfdf.appspot.com/o/not_picture.png?alt=media&token=1ced8309-815a-4d2d-b009-c27709afd9ac"
         val documentUpdate = HashMap<String, Any>()
         documentUpdate["name"] = updateInfoFragmentBinding.nameEditText.text.toString()
         documentUpdate["email"] = updateInfoFragmentBinding.emailEditText.text.toString()
@@ -158,7 +157,7 @@ class UpdateInfoFragment : Fragment() {
         if(urlProfileImage.isNotEmpty()){
             documentUpdate["urlProfileImage"] = urlProfileImage
         }else{
-            db.collection("users").document(id_user).update("urlProfileImage", noImage)
+            db.collection("users").document(id_user).update("urlProfileImage", null)
         }
 
         db.collection("users").document(id_user).update(documentUpdate)
