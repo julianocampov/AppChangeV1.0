@@ -23,7 +23,7 @@ class MessagesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         messagesBinding = FragmentMessagesBinding.inflate(inflater, container, false)
 
-        chatsAdapter = ChatsAdapter (onMessageClicked = {onMessageClicked(it)})
+        chatsAdapter = ChatsAdapter (onChatClicked = {onChatClicked(it)})
         messagesBinding.messagesRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@MessagesFragment.context, RecyclerView.VERTICAL, false)
             adapter = chatsAdapter
@@ -49,7 +49,7 @@ class MessagesFragment : Fragment() {
         }
     }
 
-    private fun onMessageClicked(chat: Chat) {
+    private fun onChatClicked(chat: Chat) {
         findNavController().navigate(MessagesFragmentDirections.actionNavigationMessagesToChatFragment(chat))
     }
 }

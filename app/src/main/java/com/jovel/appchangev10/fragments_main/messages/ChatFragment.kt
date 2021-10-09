@@ -120,6 +120,7 @@ class ChatFragment : Fragment() {
 
             val idMessage = c.timeInMillis.toString()
             val msg = Message(
+                type = "0",
                 message = message,
                 from = idOwn!!,
                 date = c.timeInMillis.toString())
