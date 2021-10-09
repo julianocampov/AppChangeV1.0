@@ -52,7 +52,6 @@
                     android:id="@+id/profile_owner_image_view"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/profile"
                     tools:ignore="contentDescription,ImageContrastCheck" />
 
                 <TextView
@@ -121,7 +120,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:text="TextView"
                 android:layout_marginEnd="32dp" />
 
             <Space
@@ -134,7 +132,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:text="TextView"
                 android:layout_marginEnd="32dp" />
 
             <Space
@@ -148,7 +145,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:text="TextView"
                 app:drawableStartCompat="@drawable/ic_location" />
 
             <Space
@@ -161,8 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:text="Preferencias : " />
+                android:layout_marginEnd="32dp" />
 
             <Space
                 android:layout_width="match_parent"
@@ -174,8 +169,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:text="TextView" />
+                android:layout_marginEnd="32dp" />
 
             <Button
                 android:id="@+id/change_button"
@@ -183,9 +177,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
-                android:text="Intercambia"
+                android:text="@string/change"
                 android:textAllCaps="false"
-                app:cornerRadius="20dp" />
+                app:cornerRadius="20dp"
+                tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
     </ScrollView>

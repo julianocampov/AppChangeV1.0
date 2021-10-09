@@ -72,6 +72,10 @@
     <string name="password_updated">Contraseña actualizada</string>
     <string name="password_not_updated">No se pudo actualizar la contraseña</string>
     <string name="message">Mensaje</string>
+    <string name="head_change">Hola, quieres cambiar</string>
+    <string name="product">Producto</string>
+    <string name="for_change">por</string>
+    <string name="my_products">Mis Productos</string>
 
 
 </resources>

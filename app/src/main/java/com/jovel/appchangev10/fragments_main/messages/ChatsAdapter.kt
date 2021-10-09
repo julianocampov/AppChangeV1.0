@@ -16,7 +16,7 @@ import com.jovel.appchangev10.model.User
 import com.squareup.picasso.Picasso
 
 class ChatsAdapter (
-    private val onMessageClicked : (Chat) -> Unit
+    private val onChatClicked : (Chat) -> Unit
 ) : RecyclerView.Adapter<ChatsAdapter.ViewHolder>() {
 
     private val listChats : MutableList<Chat> = mutableListOf()
@@ -28,7 +28,7 @@ class ChatsAdapter (
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(listChats[position])
-        holder.itemView.setOnClickListener{ onMessageClicked(listChats[position])}
+        holder.itemView.setOnClickListener{ onChatClicked(listChats[position])}
     }
 
     override fun getItemCount(): Int = listChats.size
