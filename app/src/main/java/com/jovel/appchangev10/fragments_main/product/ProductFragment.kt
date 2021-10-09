@@ -154,7 +154,7 @@ class ProductFragment : Fragment() {
     private fun loadFavorites(id: String?, db: FirebaseFirestore, product: Product) {
         db.collection("users").document(id!!).get().addOnSuccessListener { it1 ->
             val user: User = it1.toObject()!!
-            if (user.favorites!!.contains(product.id)) {
+            if (user.favorites != null && user.favorites!!.contains(product.id)) {
                 productBinding.likeTextView.setBackgroundResource(R.drawable.ic_favorite)
             } else {
                 productBinding.likeTextView.setBackgroundResource(R.drawable.ic_favorite_border)

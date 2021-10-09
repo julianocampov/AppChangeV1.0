@@ -64,25 +64,30 @@ class FavoritesFragment : Fragment() {
 
             val user: User? = it1.toObject()
 
-            fav = user!!.favorites!!
+            if (user != null) {
+                if (user.favorites != null) {
 
-            for (f in user.favorites!!) {
-                db.collection("products").document(f).get()
-                    .addOnSuccessListener { it2 ->
+                    fav = user.favorites!!
 
-                        val product: Product? = it2.toObject()
+                    for (f in user.favorites!!) {
+                        db.collection("products").document(f).get()
+                            .addOnSuccessListener { it2 ->
 
-                        if (user.favorites?.contains(product?.id) == true) {
-                            if (product != null) {
-                                listFavorites.add(product)
-                                favoritesAdapter.appendItems(listFavorites)
+                                val product: Product? = it2.toObject()
+
+                                if (user.favorites?.contains(product?.id) == true) {
+                                    if (product != null) {
+                                        listFavorites.add(product)
+                                        favoritesAdapter.appendItems(listFavorites)
+                                    }
+                                }
+                                if (product == null) {
+                                    fav.remove(f)
+                                    db.collection("users").document(id).update("favorites", fav)
+                                }
                             }
-                        }
-                        if (product == null) {
-                            fav.remove(f)
-                            db.collection("users").document(id).update("favorites", fav)
-                        }
                     }
+                }
             }
         }
     }
