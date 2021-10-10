@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,8 @@ class ChatFragment : Fragment() {
     private lateinit var chatBinding : FragmentChatBinding
     private var idSecondUser: String? = null
     private lateinit var messagesAdapter : MessagesAdapter
+    private lateinit var myProduct: String
+    private lateinit var otherProduct: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +48,41 @@ class ChatFragment : Fragment() {
         buttonsListeners()
         messagesListener()
 
+        if ( args.myProduct != "" ){
+            myProduct = args.myProduct
+            otherProduct = args.otherProduct
+
+            sendMessageType1()
+        }
+
         return  chatBinding.root
+    }
+
+    private fun onProductClicked(idProduct: String) {
+
+    }
+
+    private fun sendMessageType1() {
+        val auth = Firebase.auth
+        val db = Firebase.firestore
+        val chat = args.chat
+
+        val idOwn = auth.currentUser?.uid
+
+            val c : Calendar = Calendar.getInstance()
+
+            val idMessage = c.timeInMillis.toString()
+            val msg = Message(
+                type = "1",
+                message = null,
+                from = idOwn!!,
+                date = c.timeInMillis.toString(),
+                idProduct1 = myProduct,
+                idProduct2 = otherProduct)
+
+            db.collection("users").document(idOwn).collection("chats").document(chat.chatId!!).collection("messages").document(idMessage).set(msg)
+            db.collection("users").document(idSecondUser!!).collection("chats").document(chat.chatId).collection("messages").document(idMessage).set(msg)
+            db.collection("users").document(idSecondUser!!).collection("chats").document(chat.chatId).set(chat)
     }
 
     private fun messagesListener() {
@@ -69,7 +106,7 @@ class ChatFragment : Fragment() {
                         }
                     }
                     messagesAdapter.appendItems(listMessage)
-                    chatBinding.messagesRecyclerView.scrollToPosition(listMessage.size-1)
+                    //chatBinding.messagesRecyclerView.layoutManager?.scrollToPosition(listMessage.size-1)
                 }
             }
     }
@@ -91,14 +128,14 @@ class ChatFragment : Fragment() {
                 listMessage.add(msg)
             }
             messagesAdapter.appendItems(listMessage)
-            chatBinding.messagesRecyclerView.scrollToPosition(listMessage.size-1)
+            //chatBinding.messagesRecyclerView.layoutManager?.scrollToPosition(listMessage.size-1)
         }
     }
 
     private fun buttonsListeners() {
         with(chatBinding){
             toolbar3.setNavigationOnClickListener {
-                activity?.onBackPressed()
+                findNavController().navigate(ChatFragmentDirections.actionChatFragmentToNavigationMessages())
             }
 
             messageTextInputLayout.setEndIconOnClickListener {

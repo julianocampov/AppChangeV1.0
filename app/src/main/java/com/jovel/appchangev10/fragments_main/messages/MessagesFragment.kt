@@ -50,6 +50,6 @@ class MessagesFragment : Fragment() {
     }
 
     private fun onChatClicked(chat: Chat) {
-        findNavController().navigate(MessagesFragmentDirections.actionNavigationMessagesToChatFragment(chat))
+        findNavController().navigate(MessagesFragmentDirections.actionNavigationMessagesToChatFragment(chat,"",""))
     }
 }

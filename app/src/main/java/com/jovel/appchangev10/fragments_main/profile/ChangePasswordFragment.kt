@@ -38,6 +38,11 @@ class ChangePasswordFragment : Fragment() {
         buttonListener()
         onChangeListener()
 
+
+        changePasswordBinding.toolbar3.setNavigationOnClickListener {
+            activity?.onBackPressed()
+        }
+
         return changePasswordBinding.root
     }
 

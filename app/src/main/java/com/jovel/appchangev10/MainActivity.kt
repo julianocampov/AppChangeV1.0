@@ -45,6 +45,5 @@ class MainActivity : AppCompatActivity() {
             } else
                 navView.visibility = View.VISIBLE
         }
-
     }
 }

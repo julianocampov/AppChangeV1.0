@@ -150,7 +150,6 @@ class ProductFragment : Fragment() {
             }
     }
 
-
     private fun loadFavorites(id: String?, db: FirebaseFirestore, product: Product) {
         db.collection("users").document(id!!).get().addOnSuccessListener { it1 ->
             val user: User = it1.toObject()!!

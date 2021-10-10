@@ -38,9 +38,10 @@
                 android:id="@+id/name_chat_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_weight="20" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:layout_weight="20"
+                android:textSize="16sp" />
         </LinearLayout>
 
 

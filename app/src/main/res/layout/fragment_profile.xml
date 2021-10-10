@@ -60,22 +60,18 @@
                 android:id="@+id/name_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/qualif_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:drawableStart="@drawable/ic_location"
+                android:gravity="center_vertical"
                 tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/changes_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                tools:ignore="HardcodedText" />
         </LinearLayout>
 
     </LinearLayout>

@@ -55,8 +55,7 @@ class ProfileFragment : Fragment() {
             db.collection("users").document(id).get().addOnSuccessListener {
                 user = it.toObject()!!
                 profileBinding.nameTextView.text = user.name
-                profileBinding.changesTextView.text = user.changes.toString()
-                profileBinding.qualifTextView.text = user.qualification.toString()
+                profileBinding.qualifTextView.text = user.city.toString()
                 if (user.urlProfileImage != null) {
                     Picasso.get().load(user.urlProfileImage)
                         .into(profileBinding.profileImageView)
