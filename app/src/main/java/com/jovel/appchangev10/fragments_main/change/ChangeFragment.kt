@@ -50,6 +50,7 @@ class ChangeFragment : Fragment() {
 
     private var numberPictures = 0
     private var imageCreated = false
+    private var url = ""
 
     private var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -112,7 +113,7 @@ class ChangeFragment : Fragment() {
             descriptionProductEditText.setText(product.description)
             ubicationProductEditText.setText(product.ubication)
             myPreferencesProductEditText.setText(product.preferences)
-
+            url = product.urlImage!!
 
             stateSpinner.setSelection(product.state?.toInt()!!)
 
@@ -147,6 +148,7 @@ class ChangeFragment : Fragment() {
             documentUpdate["state"] = stateSpinner.selectedItemPosition.toString()
             documentUpdate["categories"] = listCategoriesSelected
             documentUpdate["preferences"] = preferences
+            documentUpdate["urlImage"] = url
         }
 
         val db = Firebase.firestore
@@ -218,7 +220,8 @@ class ChangeFragment : Fragment() {
         db.collection("categories").get().addOnSuccessListener { result ->
             for (document in result) {
                 val c: Category = document.toObject()
-                c.let { listCategories.add(it) }
+                if (c.name != "Todo")
+                    c.let { listCategories.add(it) }
             }
             categoriesAdapter.appendItems(listCategories)
         }

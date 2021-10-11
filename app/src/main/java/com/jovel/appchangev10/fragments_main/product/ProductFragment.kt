@@ -36,6 +36,7 @@ class ProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         productBinding = FragmentProductBinding.inflate(inflater, container, false)
+        productBinding.nameOwnerTextView.visibility = View.GONE
 
         val idProduct = args.product.id
         auth = Firebase.auth
@@ -187,6 +188,7 @@ class ProductFragment : Fragment() {
                 aux += i + "\n                       "
             }
             loadCategoriesTextView.text = getString(R.string.categoriesConc, aux)
+            nameOwnerTextView.visibility = View.VISIBLE
         }
         if (product.urlImage != null)
             Picasso.get().load(product.urlImage).into(productBinding.productImgImageView)

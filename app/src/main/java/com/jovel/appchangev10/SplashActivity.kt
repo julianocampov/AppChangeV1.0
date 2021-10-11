@@ -35,9 +35,8 @@ class SplashActivity : AppCompatActivity() {
                 } else {
                     goToLoginActivity()
                 }
-            }, 1000
+            }, 800
         )
-
     }
 
     private fun goToLoginActivity() {

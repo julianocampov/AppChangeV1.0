@@ -50,14 +50,15 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_owner_image_view"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     tools:ignore="contentDescription,ImageContrastCheck" />
 
                 <TextView
                     android:id="@+id/name_owner_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="8dp"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -143,8 +144,10 @@
                 android:id="@+id/location_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="32dp"
                 android:layout_marginEnd="32dp"
+                android:gravity="center_vertical"
                 app:drawableStartCompat="@drawable/ic_location" />
 
             <Space
